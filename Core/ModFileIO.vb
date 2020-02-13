@@ -18,6 +18,7 @@
                     ' IGNORE - ALREADY INCLUDED
                 Case Else
                     Dim aHost As ClsHost = AllHosts.Find(Function(p) p.IP = iPart(0))
+                    'If AllHosts.Count > 0 Then aHost
                     If aHost Is Nothing Then
                         aHost = New ClsHost
                         AllHosts.Add(aHost)
@@ -28,9 +29,9 @@
                     Do Until intA >= iPart.Count
                         Select Case iPart(intA)
                             Case "+ping", "ping hit"
-                                aHost.AddPing(True, InputTime)
+                                aHost.Ping.Add(True, InputTime)
                             Case "-ping", "ping miss"
-                                aHost.AddPing(False, InputTime)
+                                aHost.Ping.Add(False, InputTime)
                             Case "tcp"
                                 tcpMode = True
                                 udpMode = False
@@ -42,19 +43,21 @@
                                     Select Case Left(iPart(intA), 1)
                                         Case "+"
                                             Dim aPort As Integer = CInt(Mid(iPart(intA), 2))
-                                            aHost.AddTcp(True, aPort, InputTime)
+                                            aHost.Tcp.Add(True, aPort, InputTime)
                                         Case "-"
                                             Dim aPort As Integer = CInt(Mid(iPart(intA), 2))
-                                            aHost.AddTcp(False, aPort, InputTime)
+                                            aHost.Tcp.Add(False, aPort, InputTime)
                                         Case Else
                                             ' DO NOTHING
                                     End Select
                                 End If
                         End Select
+                        aHost.GetEmptiness()
                         intA += 1
                     Loop
             End Select
         Next
+        MsgBox("File Import Complete", vbOKOnly)
     End Sub
 
 End Module
