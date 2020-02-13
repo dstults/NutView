@@ -57,6 +57,14 @@
                     Loop
             End Select
         Next
+        ' Optimization is good!
+        For Each aHost In AllHosts
+            If aHost.IsEmpty Then
+                EmptyHosts.Add(aHost)
+            Else
+                NonEmptyHosts.Add(aHost)
+            End If
+        Next
         MsgBox("File Import Complete", vbOKOnly)
     End Sub
 

@@ -24,12 +24,22 @@
 
     Private Sub RedoColumns()
         Do Until DataDisplay.Columns.Count <= 4
-            DataDisplay.Columns.Remove(4)
+            DataDisplay.Columns.Remove(DataDisplay.Columns(4))
         Loop
-        Dim strPorts() As String = Split(TxtPorts.Text, " ")
-        For intA As Integer = 0 To strPorts.Count - 1
-            ShownPorts.Add(Val(strPorts(intA)))
-        Next
+        If ChkAutoPort.Checked Then
+            ShownPorts.Clear()
+            For Each aHost In NonEmptyHosts
+                For Each aPort In aHost.Tcp.OpenPorts
+                    ShownPorts.Add(aPort)
+                Next
+            Next
+        Else ' Do the port list
+            ShownPorts.Clear()
+            Dim strPorts() As String = Split(TxtPorts.Text, " ")
+            For intA As Integer = 0 To strPorts.Count - 1
+                ShownPorts.Add(Val(strPorts(intA)))
+            Next
+        End If
         For Each iPort As Integer In ShownPorts
             DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, iPort)
             DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 30
