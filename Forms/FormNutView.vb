@@ -36,7 +36,8 @@
                         Dim intA As Integer = 1
                         Do Until intA >= iPart.Count
                             Select Case iPart(intA)
-                                Case 
+                                Case "ping"
+
                             End Select
                             intA += 1
                         Loop
