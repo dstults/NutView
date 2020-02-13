@@ -9,43 +9,7 @@
 
     Private Sub BtnImport_Click(sender As Object, e As EventArgs) Handles BtnImport.Click
         OpenFileDialog1.ShowDialog()
-        ParseInput()
-    End Sub
-
-    Private Sub ParseInput()
-        Dim FilePath As String = OpenFileDialog1.FileName
-        Dim FileInput() As String = IO.File.ReadAllLines(FilePath)
-        Dim InputTime As DateTime = DateTime.Now
-        For Each iLine As String In FileInput
-            Dim iPart() As String = Split(iLine, ",")
-            Select Case LCase(iPart(0))
-                Case "test time"
-                    InputTime = CDate(iPart(1))
-                Case "input ips"
-                    ' IGNORE - ALREADY INCLUDED
-                Case "input ports"
-                    ' IGNORE - ALREADY INCLUDED
-                Case "timeout"
-                    ' IGNORE FOR NOW
-                Case "tests"
-                    ' IGNORE - ALREADY INCLUDED
-                Case Else
-                    Dim PossibleIP As Net.IPAddress
-                    Try
-                        PossibleIP = Net.IPAddress.Parse(iPart(0))
-                        Dim intA As Integer = 1
-                        Do Until intA >= iPart.Count
-                            Select Case iPart(intA)
-                                Case "ping"
-
-                            End Select
-                            intA += 1
-                        Loop
-                    Catch ex As Exception
-                        ' NOT IP - ignore for now
-                    End Try
-            End Select
-        Next
+        ParseFile(OpenFileDialog1.FileName)
     End Sub
 
     Private Sub ChkAutoPort_CheckedChanged(sender As Object, e As EventArgs) Handles ChkAutoPort.CheckedChanged

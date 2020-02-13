@@ -11,8 +11,11 @@
         Public Time As DateTime
     End Class
 
-    Public IP As Net.IPAddress
-    Private MAC As New HashSet(Of ClsStringRecord)
+    Public IP As String
+    Public Function IpAddress() As Net.IPAddress
+        Return Net.IPAddress.Parse(IP)
+    End Function
+    Private MAC As String
     Private Hardware As New HashSet(Of ClsStringRecord)
     Private PingRecords As New HashSet(Of ClsHitRecord)
     Private MacRecords As New HashSet(Of ClsHitRecord)
@@ -23,9 +26,17 @@
         Return GetResponseStrength(PingRecords)
     End Function
 
-    Public Function TCP(aPort As Integer)
+    Public Function TcpOpen(aPort As Integer)
         Return GetResponseStrength(TcpRecords, aPort)
     End Function
+
+    Public Sub AddPing(hit As Boolean, aDateTime As DateTime)
+        PingRecords.Add(New ClsHitRecord With {.Hit = hit, .Time = aDateTime})
+    End Sub
+
+    Public Sub AddTcp(aHit As Boolean, aPort As Integer, aDateTime As DateTime)
+        TcpRecords.Add(New ClsHitRecord With {.Hit = aHit, .Port = aPort, .Time = aDateTime})
+    End Sub
 
     Private Function GetResponseStrength(aHash As HashSet(Of ClsHitRecord), Optional aPortFilter As Integer = 0) As Single
         Dim Responses As Integer
