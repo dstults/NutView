@@ -29,12 +29,39 @@
             DataDisplay.Rows(jRow).Cells(0).Value = aHost.IP
             DataDisplay.Rows(jRow).Cells(1).Value = aHost.MacAddress
             DataDisplay.Rows(jRow).Cells(2).Value = aHost.Hardware
-            DataDisplay.Rows(jRow).Cells(3).Value = aHost.Ping.Value
+            DataDisplay.Rows(jRow).Cells(3).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
             For intA As Integer = 0 To ShownPorts.Count - 1
-                DataDisplay.Rows(jRow).Cells(4 + intA).Value = aHost.Tcp.Value(ShownPorts(intA))
+                DataDisplay.Rows(jRow).Cells(4 + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
             Next
         Next
     End Sub
+
+    Private Function GetColorFromValue(aVal As Single) As Color
+        Select Case aVal
+            Case Is >= 1
+                Return Color.FromArgb(64, 255, 64)
+            Case Is >= 0.9
+                Return Color.FromArgb(0, 255, 0) ' GREEN
+            Case Is >= 0.8
+                Return Color.FromArgb(85, 255, 0)
+            Case Is >= 0.7
+                Return Color.FromArgb(171, 255, 0)
+            Case Is >= 0.6
+                Return Color.FromArgb(255, 255, 0) ' YELLOW
+            Case Is >= 0.5
+                Return Color.FromArgb(255, 171, 0)
+            Case Is >= 0.4
+                Return Color.FromArgb(255, 85, 0)
+            Case Is >= 0.3
+                Return Color.FromArgb(255, 0, 0) ' RED
+            Case Is >= 0.2
+                Return Color.FromArgb(171, 0, 0)
+            Case Is >= 0.1
+                Return Color.FromArgb(85, 0, 0)
+            Case 0
+                Return Color.FromArgb(0, 0, 0)
+        End Select
+    End Function
 
     Private Sub ChkAutoPort_CheckedChanged(sender As Object, e As EventArgs) Handles ChkAutoPort.CheckedChanged
         Select Case ChkAutoPort.Checked
@@ -66,7 +93,7 @@
         End If
         For Each iPort As Integer In ShownPorts
             DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, iPort)
-            DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 30
+            DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
         Next
         ResetHosts()
     End Sub
