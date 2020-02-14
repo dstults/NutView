@@ -6,13 +6,11 @@
         Public Times(0) As DateTime
 
         Public Sub Add(aHit As Boolean, aDateTime As DateTime)
-            Dim newVal As Integer
-            If aHit Then newVal = 1 Else newVal = 0
-            If Value = 0 And aHit Then
+            If aHit Then
                 Value = 1
-            Else
-                Value = (Value + newVal) / 2
-                If Value <= 0.05 Then Value = 0
+            ElseIf Value > 0 Then
+                Value -= 0.1
+                If Value < 0 Then Value = 0
             End If
             Dim PingHits As Integer = Hits.Count
             ReDim Preserve Hits(PingHits), Times(PingHits)
@@ -30,21 +28,15 @@
         Public Times(0) As DateTime
 
         Public Sub Add(aHit As Boolean, aPort As Integer, aDateTime As DateTime)
-            Dim newVal As Integer
             If aHit Then
                 OpenPorts.Add(aPort)
-                newVal = 1
-            Else
-                newVal = 0
-            End If
-            If Value(aPort) = 0 And aHit Then
                 Value(aPort) = 1
-            Else
-                Value(aPort) = (Value(aPort) + newVal) / 2
-                If Value(aPort) > 0 And Value(aPort) <= 0.05 Then
-                    OpenPorts.Remove(aPort)
+            ElseIf Value(aPort) > 0 Then
+                Value(aPort) -= 0.1
+                If Value(aPort) <= 0 Then
                     Value(aPort) = 0
                 End If
+                OpenPorts.Remove(aPort)
             End If
             Dim TcpHits As Integer = Hits.Count
             ReDim Preserve Hits(TcpHits), Ports(TcpHits), Times(TcpHits)

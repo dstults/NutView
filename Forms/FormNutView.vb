@@ -39,15 +39,15 @@
     Private Function GetColorFromValue(aVal As Single) As Color
         Select Case aVal
             Case Is >= 1
-                Return Color.FromArgb(64, 255, 64)
+                Return Color.FromArgb(128, 255, 128)
             Case Is >= 0.9
-                Return Color.FromArgb(0, 255, 0) ' GREEN
+                Return Color.FromArgb(0, 205, 0) ' GREEN
             Case Is >= 0.8
-                Return Color.FromArgb(85, 255, 0)
+                Return Color.FromArgb(85, 205, 0)
             Case Is >= 0.7
-                Return Color.FromArgb(171, 255, 0)
+                Return Color.FromArgb(171, 205, 0)
             Case Is >= 0.6
-                Return Color.FromArgb(255, 255, 0) ' YELLOW
+                Return Color.FromArgb(255, 205, 0) ' YELLOW
             Case Is >= 0.5
                 Return Color.FromArgb(255, 171, 0)
             Case Is >= 0.4
@@ -58,7 +58,7 @@
                 Return Color.FromArgb(171, 0, 0)
             Case Is >= 0.1
                 Return Color.FromArgb(85, 0, 0)
-            Case 0
+            Case Is < 0.1
                 Return Color.FromArgb(0, 0, 0)
         End Select
     End Function
