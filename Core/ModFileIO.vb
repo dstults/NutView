@@ -22,6 +22,7 @@
                     If aHost Is Nothing Then
                         aHost = New ClsHost
                         AllHosts.Add(aHost)
+                        aHost.IP = iPart(0)
                     End If
                     Dim tcpMode As Boolean = False
                     Dim udpMode As Boolean = False
@@ -58,14 +59,16 @@
             End Select
         Next
         ' Optimization is good!
+        KnownHosts.Clear()
+        EmptyHosts.Clear()
         For Each aHost In AllHosts
             If aHost.IsEmpty Then
                 EmptyHosts.Add(aHost)
             Else
-                NonEmptyHosts.Add(aHost)
+                KnownHosts.Add(aHost)
             End If
         Next
-        MsgBox("File Import Complete", vbOKOnly)
+        'MsgBox("File Import Complete", vbOKOnly)
     End Sub
 
 End Module
