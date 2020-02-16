@@ -6,7 +6,7 @@
         CustomName
         IpAddress
         MacAddress
-        Hardware
+        Manufacturer
         Hostname
         Ping
         Ports
@@ -39,13 +39,31 @@
             DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = aHost.CustomName
             DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = aHost.IP
             DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = aHost.MacAddress
-            DataDisplay.Rows(jRow).Cells(CT.Hardware).Value = aHost.Hardware
+            If InStr(DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value, ",") > 0 Then
+                DataDisplay.Rows(jRow).Cells(CT.MacAddress).Style.BackColor = Color.Red
+            End If
+            DataDisplay.Rows(jRow).Cells(CT.Manufacturer).Value = aHost.Manufacturer
             DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = aHost.HostName
             DataDisplay.Rows(jRow).Cells(CT.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
-            If aHost.Ping.Value > 0 Then DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "!"
+            If aHost.Ping.Value >= 0.8 Then
+                DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "."
+            ElseIf aHost.Ping.Value > 0 Then
+                DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "!"
+            End If
             For intA As Integer = 0 To ShownPorts.Count - 1
                 DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
-                If aHost.Tcp.Value(ShownPorts(intA)) > 0 Then DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "!"
+                If aHost.Tcp.Value(ShownPorts(intA)) >= 0.8 Then
+                    DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "."
+                ElseIf aHost.Tcp.Value(ShownPorts(intA)) > 0 Then
+                    DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "!"
+                End If
+            Next
+            For Each aComment As String In aHost.Comments
+                If DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1).Value = "" Then
+                    DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1).Value = aComment
+                Else
+                    DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1).Value &= " // " & aComment
+                End If
             Next
         Next
     End Sub
@@ -88,8 +106,8 @@
     End Sub
 
     Private Sub RedoColumns()
-        Do Until DataDisplay.Columns.Count <= 4
-            DataDisplay.Columns.Remove(DataDisplay.Columns(4))
+        Do Until DataDisplay.Columns.Count <= CT.Ports
+            DataDisplay.Columns.Remove(DataDisplay.Columns(CT.Ports))
         Loop
         If ChkAutoPort.Checked Then
             ShownPorts.Clear()
@@ -109,6 +127,8 @@
             DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, iPort)
             DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
         Next
+        DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, "Comments")
+        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 900
         ResetHosts()
     End Sub
 

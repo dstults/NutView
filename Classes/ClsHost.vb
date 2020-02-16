@@ -51,12 +51,12 @@
     Public HostName As String
     Public IP As String
     Public MacAddress As String
-    Public Hardware As String
+    Public Manufacturer As String
     Public Ping As New ClsPingData
     Public Tcp As New ClsTcpData
     Public IsEmpty As Boolean
 
-    Private Comments As New HashSet(Of String)
+    Public Comments As New HashSet(Of String)
 
     Public Function IpAddress() As Net.IPAddress
         Return Net.IPAddress.Parse(IP)
@@ -65,7 +65,7 @@
     Public Sub GetEmptiness()
         Dim HasMeta As Boolean = False
         If MacAddress <> "" Then HasMeta = True
-        If Hardware <> "" Then HasMeta = True
+        If Manufacturer <> "" Then HasMeta = True
         If Comments.Count > 0 Then HasMeta = True
         If HasMeta Or Ping.Value > 0 Or Tcp.OpenPorts.Count > 0 Then IsEmpty = False Else IsEmpty = True
     End Sub
