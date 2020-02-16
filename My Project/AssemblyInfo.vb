@@ -33,3 +33,6 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+
+' Workaround to Dates not Debugging right:
+<Assembly: DebuggerDisplay("{ToString}", Target:=GetType(Date))>

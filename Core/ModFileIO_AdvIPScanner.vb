@@ -45,11 +45,7 @@
                 If aHost.MacAddress = "" Then
                     aHost.MacAddress = iPart(12)
                 Else
-                    If InStr(aHost.MacAddress, iPart(12)) > 0 Then
-                        ' do nothing
-                    Else
-                        aHost.MacAddress &= "," & iPart(12)
-                    End If
+                    If Not aHost.MacAddress.Contains(iPart(12)) Then aHost.MacAddress &= "," & iPart(12)
                 End If
             End If
         End If

@@ -36,20 +36,39 @@
         For Each aHost As ClsHost In KnownHosts
             DataDisplay.Rows.Add()
             Dim jRow As Integer = DataDisplay.Rows.Count - 1 ' (-1 header & -1 adder)
-            DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = aHost.CustomName
-            DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = aHost.IP
-            DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = aHost.MacAddress
-            If InStr(DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value, ",") > 0 Then
-                DataDisplay.Rows(jRow).Cells(CT.MacAddress).Style.BackColor = Color.Red
-            End If
-            DataDisplay.Rows(jRow).Cells(CT.Manufacturer).Value = aHost.Manufacturer
-            DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = aHost.HostName
+
+            Dim strCustomName As String = aHost.CustomName
+            If strCustomName = "" Then strCustomName = "-"
+            DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = strCustomName
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.CustomName))
+
+            Dim strIP As String = aHost.IP
+            If strIP = "" Then strIP = "-"
+            DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = strIP
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.IpAddress))
+
+            Dim strMacAddress As String = aHost.MacAddress
+            If strMacAddress = "" Then strMacAddress = "-"
+            DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = strMacAddress
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.MacAddress))
+
+            Dim strManufacturer As String = aHost.Manufacturer
+            If strManufacturer = "" Then strManufacturer = "-"
+            DataDisplay.Rows(jRow).Cells(CT.Manufacturer).Value = strManufacturer
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Manufacturer))
+
+            Dim strHostname As String = aHost.HostName
+            If strHostname = "" Then strHostname = "-"
+            DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = strHostname
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Hostname))
+
             DataDisplay.Rows(jRow).Cells(CT.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
             If aHost.Ping.Value >= 0.8 Then
                 DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "."
             ElseIf aHost.Ping.Value > 0 Then
                 DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "!"
             End If
+
             For intA As Integer = 0 To ShownPorts.Count - 1
                 DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
                 If aHost.Tcp.Value(ShownPorts(intA)) >= 0.8 Then
@@ -58,6 +77,7 @@
                     DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "!"
                 End If
             Next
+
             For Each aComment As String In aHost.Comments
                 If DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1).Value = "" Then
                     DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1).Value = aComment
@@ -65,7 +85,20 @@
                     DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1).Value &= " // " & aComment
                 End If
             Next
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1))
         Next
+    End Sub
+
+    Private Sub DoCellBestColorCheck(myCell As DataGridViewCell)
+        If myCell.Value Is Nothing Then
+            myCell.Style.BackColor = Color.Gray
+        ElseIf myCell.Value.contains(" & ") Then
+            myCell.Style.BackColor = Color.Red
+        ElseIf myCell.Value = "-" Or myCell.Value = "" Then
+            myCell.Style.BackColor = Color.Gray
+        Else
+            myCell.Style.BackColor = Color.WhiteSmoke
+        End If
     End Sub
 
     Private Function GetColorFromValue(aVal As Single) As Color
@@ -138,4 +171,19 @@
         EmptyHosts.Clear()
         RedoColumns()
     End Sub
+
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        SaveFileDialog1.FileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm") & " NutView.csv"
+        Select Case SaveFileDialog1.ShowDialog()
+            Case DialogResult.Cancel, DialogResult.Abort
+                ' Do nothing
+            Case Else
+                SaveNutView(SaveFileDialog1.FileName)
+        End Select
+    End Sub
+
+    Private Sub FormNutView_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        Application.Exit()
+    End Sub
+
 End Class

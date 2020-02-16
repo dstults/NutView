@@ -26,12 +26,6 @@ Partial Class FormNutView
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormNutView))
         Me.DataDisplay = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.BtnImport = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -40,6 +34,12 @@ Partial Class FormNutView
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ChkAutoPort = New System.Windows.Forms.CheckBox()
         Me.BtnClear = New System.Windows.Forms.Button()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -76,43 +76,6 @@ Partial Class FormNutView
         Me.DataDisplay.RowHeadersVisible = False
         Me.DataDisplay.Size = New System.Drawing.Size(734, 302)
         Me.DataDisplay.TabIndex = 0
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Custom Name"
-        Me.Column1.Name = "Column1"
-        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "IP Address"
-        Me.Column2.Name = "Column2"
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "MAC Address"
-        Me.Column3.Name = "Column3"
-        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Manufacturer"
-        Me.Column4.Name = "Column4"
-        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Hostname"
-        Me.Column5.Name = "Column5"
-        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Ping"
-        Me.Column6.Name = "Column6"
-        Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column6.Width = 30
         '
         'BtnImport
         '
@@ -180,6 +143,37 @@ Partial Class FormNutView
         Me.BtnClear.TabIndex = 6
         Me.BtnClear.Text = "Clear"
         Me.BtnClear.UseVisualStyleBackColor = True
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Custom Name"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "IP Address"
+        Me.Column2.Name = "Column2"
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "MAC Address"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Manufacturer"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Hostname"
+        Me.Column5.Name = "Column5"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Ping"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Width = 30
         '
         'FormNutView
         '

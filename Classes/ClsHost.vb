@@ -12,8 +12,13 @@
                 Value -= 0.1
                 If Value < 0 Then Value = 0
             End If
-            Dim PingHits As Integer = Hits.Count
-            ReDim Preserve Hits(PingHits), Times(PingHits)
+            Dim PingHits As Integer
+            If Times(0) = Nothing Then
+                PingHits = 0
+            Else
+                PingHits = Hits.Count
+                ReDim Preserve Hits(PingHits), Times(PingHits)
+            End If
             Hits(PingHits) = aHit
             Times(PingHits) = aDateTime
         End Sub
@@ -38,8 +43,13 @@
                 End If
                 OpenPorts.Remove(aPort)
             End If
-            Dim TcpHits As Integer = Hits.Count
-            ReDim Preserve Hits(TcpHits), Ports(TcpHits), Times(TcpHits)
+            Dim TcpHits As Integer
+            If Times(0) = Nothing Then
+                TcpHits = 0
+            Else
+                TcpHits = Hits.Count
+                ReDim Preserve Hits(TcpHits), Ports(TcpHits), Times(TcpHits)
+            End If
             Hits(TcpHits) = aHit
             Ports(TcpHits) = aPort
             Times(TcpHits) = aDateTime
