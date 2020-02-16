@@ -15,8 +15,10 @@
         MainWindow.Enabled = False
         Select Case MyTask
             Case FileTask.Load
+                Me.Text = "Loading!"
                 Label1.Text = "Loading...this should be fast..."
             Case FileTask.Save
+                Me.Text = "Saving!"
                 Label1.Text = "Saving...this may take a while..."
         End Select
     End Sub
