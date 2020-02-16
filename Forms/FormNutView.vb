@@ -30,8 +30,10 @@
             DataDisplay.Rows(jRow).Cells(1).Value = aHost.MacAddress
             DataDisplay.Rows(jRow).Cells(2).Value = aHost.Hardware
             DataDisplay.Rows(jRow).Cells(3).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
+            If aHost.Ping.Value > 0 Then DataDisplay.Rows(jRow).Cells(3).Value = "!"
             For intA As Integer = 0 To ShownPorts.Count - 1
                 DataDisplay.Rows(jRow).Cells(4 + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
+                If aHost.Tcp.Value(ShownPorts(intA)) > 0 Then DataDisplay.Rows(jRow).Cells(4 + intA).Value = "!"
             Next
         Next
     End Sub
