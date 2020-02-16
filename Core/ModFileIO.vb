@@ -8,25 +8,36 @@
         Metasploit
     End Enum
 
+    Private InputMode As Integer = IMode.NutCheck
+    Private InputTime As DateTime = DateTime.Now
+
     Public Sub ParseFile(FilePath As String)
         Dim FileInput() As String = IO.File.ReadAllLines(FilePath)
-        Dim InputTime As DateTime = DateTime.Now
-        Dim InputMode As Integer = IMode.NutCheck
         For Each iLine As String In FileInput
             Dim iPart() As String = Split(iLine, ",")
-            Select Case iPart(0)
-                Case "TEST TIME", "INPUT IPS", "INPUT PORTS", "TIMEOUT", "TESTS"
+            Select Case LCase(iPart(0))
+                Case "nutcheck", "test time", "input ips", "input ports", "timeout", "tests"
                     InputMode = IMode.NutCheck
                 Case Else
-                    If Net.iPart(0) Then
+                    Try
+                        Dim testIP As Net.IPAddress = Net.IPAddress.Parse(iPart(0))
+                        If testIP IsNot Nothing Then InputMode = IMode.NutCheck
+                    Catch ex As Exception
+
+                    End Try
+                    If LCase(Strings.Left(iPart(0), 2)) = "on" Or LCase(Strings.Left(iPart(0), 4)) = "dead" Or LCase(Strings.Left(iPart(0), 6)) = "status" Then InputMode = IMode.AdvancedIPScanner
+
             End Select
+            If InputMode <> IMode.Unset Then Exit For
         Next
         For Each iLine As String In FileInput
             Select Case InputMode
                 Case IMode.NutCheck
                     Dim iPart() As String = Split(iLine, ",")
-                    NutCheckImport(FileInput)
+                    NutCheckImport(iPart)
                 Case IMode.AdvancedIPScanner
+                    Dim iPart() As String = Split(iLine, vbTab)
+                    AdvIpScannerImport(iPart)
                 Case IMode.NetCat
                 Case IMode.Metasploit
             End Select

@@ -14,7 +14,6 @@
                 ' IGNORE - ALREADY INCLUDED
             Case Else
                 Dim aHost As ClsHost = AllHosts.Find(Function(p) p.IP = iPart(0))
-                'If AllHosts.Count > 0 Then aHost
                 If aHost Is Nothing Then
                     aHost = New ClsHost
                     AllHosts.Add(aHost)

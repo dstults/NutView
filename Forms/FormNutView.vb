@@ -2,6 +2,16 @@
 
     Private ShownPorts As New SortedSet(Of Integer)
 
+    Private Enum CT
+        CustomName
+        IpAddress
+        MacAddress
+        Hardware
+        Hostname
+        Ping
+        Ports
+    End Enum
+
     Private Sub FormNutView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Darren's NutView " & ProgVersion
         RedoColumns()
@@ -26,14 +36,16 @@
         For Each aHost As ClsHost In KnownHosts
             DataDisplay.Rows.Add()
             Dim jRow As Integer = DataDisplay.Rows.Count - 1 ' (-1 header & -1 adder)
-            DataDisplay.Rows(jRow).Cells(0).Value = aHost.IP
-            DataDisplay.Rows(jRow).Cells(1).Value = aHost.MacAddress
-            DataDisplay.Rows(jRow).Cells(2).Value = aHost.Hardware
-            DataDisplay.Rows(jRow).Cells(3).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
-            If aHost.Ping.Value > 0 Then DataDisplay.Rows(jRow).Cells(3).Value = "!"
+            DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = aHost.CustomName
+            DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = aHost.IP
+            DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = aHost.MacAddress
+            DataDisplay.Rows(jRow).Cells(CT.Hardware).Value = aHost.Hardware
+            DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = aHost.HostName
+            DataDisplay.Rows(jRow).Cells(CT.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
+            If aHost.Ping.Value > 0 Then DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "!"
             For intA As Integer = 0 To ShownPorts.Count - 1
-                DataDisplay.Rows(jRow).Cells(4 + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
-                If aHost.Tcp.Value(ShownPorts(intA)) > 0 Then DataDisplay.Rows(jRow).Cells(4 + intA).Value = "!"
+                DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
+                If aHost.Tcp.Value(ShownPorts(intA)) > 0 Then DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "!"
             Next
         Next
     End Sub

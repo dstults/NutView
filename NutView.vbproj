@@ -79,6 +79,7 @@
     <Compile Include="Classes\ClsHost.vb" />
     <Compile Include="Core\ModCore.vb" />
     <Compile Include="Core\ModFileIO.vb" />
+    <Compile Include="Core\ModFileIO_AdvIPScanner.vb" />
     <Compile Include="Core\ModFileIO_NutCheck.vb" />
     <Compile Include="Forms\FormNutView.vb">
       <SubType>Form</SubType>

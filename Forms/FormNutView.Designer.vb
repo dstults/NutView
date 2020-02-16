@@ -26,6 +26,12 @@ Partial Class FormNutView
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormNutView))
         Me.DataDisplay = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.BtnImport = New System.Windows.Forms.Button()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -34,10 +40,6 @@ Partial Class FormNutView
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ChkAutoPort = New System.Windows.Forms.CheckBox()
         Me.BtnClear = New System.Windows.Forms.Button()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -60,7 +62,7 @@ Partial Class FormNutView
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataDisplay.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataDisplay.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4})
+        Me.DataDisplay.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6})
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 8.0!)
@@ -69,26 +71,63 @@ Partial Class FormNutView
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataDisplay.DefaultCellStyle = DataGridViewCellStyle2
-        Me.DataDisplay.Location = New System.Drawing.Point(6, 85)
+        Me.DataDisplay.Location = New System.Drawing.Point(6, 44)
         Me.DataDisplay.Name = "DataDisplay"
         Me.DataDisplay.RowHeadersVisible = False
-        Me.DataDisplay.Size = New System.Drawing.Size(734, 261)
+        Me.DataDisplay.Size = New System.Drawing.Size(734, 302)
         Me.DataDisplay.TabIndex = 0
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Custom Name"
+        Me.Column1.Name = "Column1"
+        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "IP Address"
+        Me.Column2.Name = "Column2"
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "MAC Address"
+        Me.Column3.Name = "Column3"
+        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Manufacturer"
+        Me.Column4.Name = "Column4"
+        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Hostname"
+        Me.Column5.Name = "Column5"
+        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Ping"
+        Me.Column6.Name = "Column6"
+        Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column6.Width = 30
         '
         'BtnImport
         '
-        Me.BtnImport.Location = New System.Drawing.Point(6, 44)
+        Me.BtnImport.Location = New System.Drawing.Point(83, 3)
         Me.BtnImport.Name = "BtnImport"
-        Me.BtnImport.Size = New System.Drawing.Size(104, 35)
+        Me.BtnImport.Size = New System.Drawing.Size(71, 35)
         Me.BtnImport.TabIndex = 1
         Me.BtnImport.Text = "Import"
         Me.BtnImport.UseVisualStyleBackColor = True
         '
         'BtnSave
         '
-        Me.BtnSave.Location = New System.Drawing.Point(116, 44)
+        Me.BtnSave.Location = New System.Drawing.Point(160, 3)
         Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(104, 35)
+        Me.BtnSave.Size = New System.Drawing.Size(71, 35)
         Me.BtnSave.TabIndex = 2
         Me.BtnSave.Text = "Save"
         Me.BtnSave.UseVisualStyleBackColor = True
@@ -107,9 +146,9 @@ Partial Class FormNutView
         Me.TxtPorts.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtPorts.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
-        Me.TxtPorts.Location = New System.Drawing.Point(323, 48)
+        Me.TxtPorts.Location = New System.Drawing.Point(334, 7)
         Me.TxtPorts.Name = "TxtPorts"
-        Me.TxtPorts.Size = New System.Drawing.Size(417, 24)
+        Me.TxtPorts.Size = New System.Drawing.Size(406, 24)
         Me.TxtPorts.TabIndex = 3
         Me.TxtPorts.Text = "7 13 17 20 21 22 53 80 139 143 443 445 1723 3389 5900"
         '
@@ -117,7 +156,7 @@ Partial Class FormNutView
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
-        Me.Label1.Location = New System.Drawing.Point(226, 51)
+        Me.Label1.Location = New System.Drawing.Point(237, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(48, 18)
         Me.Label1.TabIndex = 4
@@ -126,7 +165,7 @@ Partial Class FormNutView
         'ChkAutoPort
         '
         Me.ChkAutoPort.AutoSize = True
-        Me.ChkAutoPort.Location = New System.Drawing.Point(274, 54)
+        Me.ChkAutoPort.Location = New System.Drawing.Point(285, 13)
         Me.ChkAutoPort.Name = "ChkAutoPort"
         Me.ChkAutoPort.Size = New System.Drawing.Size(48, 17)
         Me.ChkAutoPort.TabIndex = 5
@@ -137,36 +176,10 @@ Partial Class FormNutView
         '
         Me.BtnClear.Location = New System.Drawing.Point(6, 3)
         Me.BtnClear.Name = "BtnClear"
-        Me.BtnClear.Size = New System.Drawing.Size(104, 35)
+        Me.BtnClear.Size = New System.Drawing.Size(71, 35)
         Me.BtnClear.TabIndex = 6
-        Me.BtnClear.Text = "Clear All Data"
+        Me.BtnClear.Text = "Clear"
         Me.BtnClear.UseVisualStyleBackColor = True
-        '
-        'Column1
-        '
-        Me.Column1.Frozen = True
-        Me.Column1.HeaderText = "IP Address"
-        Me.Column1.Name = "Column1"
-        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "MAC Address"
-        Me.Column2.Name = "Column2"
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Manufacturer"
-        Me.Column3.Name = "Column3"
-        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Ping"
-        Me.Column4.Name = "Column4"
-        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column4.Width = 30
         '
         'FormNutView
         '
@@ -201,4 +214,6 @@ Partial Class FormNutView
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
 End Class

@@ -47,6 +47,8 @@
 
     End Class
 
+    Public CustomName As String
+    Public HostName As String
     Public IP As String
     Public MacAddress As String
     Public Hardware As String
