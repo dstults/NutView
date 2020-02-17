@@ -9,8 +9,7 @@
     Private Enum FType
         Unset
         NutCheck
-        NutViewFull
-        NutViewShort
+        NutView
         AdvancedIPScanner
         NetCat
         Metasploit
@@ -24,10 +23,8 @@
         For Each iLine As String In FileInput
             Dim iPart() As String = Split(iLine, ",")
             Select Case LCase(iPart(0))
-                Case "nutview", "nutview full"
-                    InputMode = FType.NutViewFull
-                Case "host", "nutview short"
-                    InputMode = FType.NutViewShort
+                Case "nutview", "host"
+                    InputMode = FType.NutView
                 Case "nutcheck", "test time", "input ips", "input ports", "timeout", "tests"
                     InputMode = FType.NutCheck
                 Case Else
@@ -44,10 +41,7 @@
         Next
         For Each iLine As String In FileInput
             Select Case InputMode
-                Case FType.NutViewFull
-                    Dim iPart() As String = Split(iLine, "," & vbTab)
-                    NutViewImport(iPart)
-                Case FType.NutViewShort
+                Case FType.NutView
                     Dim iPart() As String = Split(iLine, "," & vbTab)
                     NutViewImport(iPart)
                 Case FType.NutCheck

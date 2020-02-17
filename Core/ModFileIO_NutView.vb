@@ -44,7 +44,17 @@
                             intA += 1
                             aHost.Comments.Add(iPart(intA))
                         Case Else
-                            ' DO NOTHING
+                            If iPart(intA).Contains(":") Then
+                                Dim getVals() As String = Split(iPart(intA), ":")
+                                Select Case LCase(getVals(0))
+                                    Case "ping"
+                                        aHost.Ping.SetVal(getVals(1), InputTime)
+                                    Case "tcp"
+                                        aHost.Tcp.SetVal(getVals(1), getVals(2), InputTime)
+                                    Case "udp"
+                                        'aHost.Udp.SetVal(getVals(1), getVals(2), InputTime)
+                                End Select
+                            End If
                     End Select
                     intA += 1
                 Loop Until intA >= iPart.Count

@@ -12,6 +12,20 @@
                 Value -= 0.1
                 If Value < 0 Then Value = 0.1 ' DON'T EVER LET IT COMPLETELY DIE OUT.
             End If
+            ArchivePings(aHit, aDateTime)
+        End Sub
+
+        Public Sub SetVal(aVal As Single, aDateTime As DateTime)
+            If Value > 0 And aVal = 0 Then
+                Value = 0.1
+            Else
+                Value = aVal
+            End If
+            Dim aHit As Boolean = Value > 0
+            ArchivePings(aHit, aDateTime)
+        End Sub
+
+        Private Sub ArchivePings(aHit As Boolean, aDateTime As DateTime)
             Dim PingHits As Integer
             If Times(0) = Nothing Then
                 PingHits = 0
@@ -40,9 +54,24 @@
                 Value(aPort) -= 0.1
                 If Value(aPort) <= 0 Then
                     Value(aPort) = 0.1 ' DON'T EVER LET IT COMPLETELY DIE OUT.
+                    'OpenPorts.Remove(aPort)
                 End If
-                OpenPorts.Remove(aPort)
             End If
+            ArchiveTcps(aHit, aPort, aDateTime)
+        End Sub
+
+        Public Sub SetVal(aPort As Integer, aVal As Single, aDateTime As DateTime)
+            If Value(aPort) > 0 And aVal = 0 Then
+                Value(aPort) = 0.1
+            Else
+                Value(aPort) = aVal
+            End If
+            If Value(aPort) > 0 Then OpenPorts.Add(aPort)
+            Dim aHit As Boolean = aVal > 0
+            ArchiveTcps(aHit, aPort, aDateTime)
+        End Sub
+
+        Private Sub ArchiveTcps(aHit As Boolean, aPort As Integer, aDateTime As DateTime)
             Dim TcpHits As Integer
             If Times(0) = Nothing Then
                 TcpHits = 0

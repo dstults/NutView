@@ -13,15 +13,9 @@
 
         Dim MyProgress As New FormProgress(FileTask.Save)
         MyProgress.Show()
-        Dim Header As String = "NUTVIEW"
-        Select Case OutputFull
-            Case True
-                Header &= " FULL"
-            Case False
-                Header &= " SHORT"
-        End Select
 
-        IO.File.WriteAllText(MyOutputFile, Header & vbNewLine)
+        ' Set Header and Write Out file
+        IO.File.WriteAllText(MyOutputFile, "NUTVIEW" & vbNewLine)
         AppendHost(CurrentProgress, OutputFull)
 
     End Sub
@@ -76,17 +70,10 @@
 
         Else ' SHORT MODE ================================================
 
-            If iHost.Ping.Hits.Count > 0 Then
-                For intA As Integer = 0 To iHost.Ping.Hits.Count - 1
-                    Select Case iHost.Ping.Hits(intA)
-                        Case True
-                            MachineReport &= cDel & "+PING"
-                        Case False
-                            MachineReport &= cDel & "-PING"
-                    End Select
-                    MachineReport &= cDel & iHost.Ping.Times(intA)
-                Next
-            End If
+            MachineReport &= cDel & "PING:" & iHost.Ping.Value
+            For Each iPort As Integer In iHost.Tcp.OpenPorts
+                MachineReport &= cDel & "TCP:" & iPort & ":" & iHost.Tcp.Value(iPort)
+            Next
             If iHost.Tcp.Hits.Count > 0 Then
                 For intA As Integer = 0 To iHost.Tcp.Hits.Count - 1
                     Select Case iHost.Tcp.Hits(intA)

@@ -15,9 +15,11 @@
         MainWindow.Enabled = False
         Select Case MyTask
             Case FileTask.Import
+                Me.Enabled = False
                 Me.Text = "Importing!"
                 Label1.Text = "Importing...this should be fast..."
             Case FileTask.Save
+                Me.Enabled = False
                 Me.Text = "Saving!"
                 Label1.Text = "Saving...this may take a while..."
         End Select
@@ -38,7 +40,8 @@
             Case FileTask.Import
                 ProgressBar1.Value = ContinueLoading()
                 If ProgressBar1.Value >= 100 Then
-                    Me.Text = "Importing!"
+                    Me.Enabled = True
+                    Me.Text = "Import Complete!"
                     Label1.Text = "Import Complete!"
                     BtnOK.Enabled = True
                     BtnOK.Text = "Great!"
@@ -47,6 +50,7 @@
             Case FileTask.Save
                 ProgressBar1.Value = ContinueSaving()
                 If ProgressBar1.Value >= 100 Then
+                    Me.Enabled = True
                     Me.Text = "Save Complete!"
                     Label1.Text = "Save Complete!"
                     BtnOK.Enabled = True
