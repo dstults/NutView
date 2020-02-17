@@ -13,7 +13,7 @@
         CurrentProgress = 0
         MachineCodeBuffer = ""
 
-        Dim MyProgress As New FormProgress(FileTask.Save)
+        Dim MyProgress As New FormProgress(FTask.Save)
         MyProgress.Show()
 
         ' Set Header and Write Out file

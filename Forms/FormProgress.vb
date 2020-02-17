@@ -18,15 +18,15 @@ Public Class FormProgress
         StartTime = DateTime.Now
         MainWindow.Enabled = False
         Select Case MyTask
-            Case FileTask.Test
+            Case FTask.Test
                 Me.Enabled = False
                 Me.Text = "Testing!"
                 Label1.Text = "Testing...this should be super fast..."
-            Case FileTask.Import
+            Case FTask.Import
                 Me.Enabled = False
                 Me.Text = "Importing!"
                 Label1.Text = "Importing...this should be fast..."
-            Case FileTask.Save
+            Case FTask.Save
                 Me.Enabled = False
                 Me.Text = "Saving!"
                 Label1.Text = "Saving...this may take a while..."
@@ -39,25 +39,29 @@ Public Class FormProgress
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Select Case MyTask
-            Case FileTask.Idle
+            Case FTask.Idle
                 Timer1.Enabled = False
                 BtnOK.Enabled = True
                 BtnOK.Text = "CRAZY!"
-            Case FileTask.Test
+            Case FTask.Test
                 ProgressBar1.Value += 1
                 If ProgressBar1.Value >= 100 Then
                     ShowCompletion("Test")
                 End If
-            Case FileTask.Import
-                ProgressBar1.Value = ContinueLoading()
+            Case FTask.Import
+                ProgressBar1.Value = ContinueImport()
                 If ProgressBar1.Value >= 100 Then
                     ShowCompletion("Import")
+                    SetToAutoClose()
+                    MainWindow.RefreshDisplay()
                 End If
-            Case FileTask.Save
+            Case FTask.Save
                 ProgressBar1.Value = ContinueSaving()
                 If ProgressBar1.Value >= 100 Then
                     ShowCompletion("Save")
                 End If
+            Case FTask.AutoClose
+                Me.Close()
         End Select
     End Sub
 
@@ -78,4 +82,11 @@ Public Class FormProgress
     Private Sub FormProgress_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         Me.Dispose()
     End Sub
+
+    Private Sub SetToAutoClose()
+        MyTask = FTask.AutoClose
+        Timer1.Interval = 50
+        Timer1.Enabled = True
+    End Sub
+
 End Class

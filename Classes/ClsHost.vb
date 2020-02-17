@@ -1,7 +1,16 @@
 ﻿Public Class ClsHost
 
+    Public Enum NetState
+        Untested ' Dark Gray
+        Dead ' Black
+        NewlyDetected ' Aqua
+        Solid ' Green
+        Missing ' Yellow
+        DoubleMissing ' Red
+    End Enum
+
     Public Class ClsPingData
-        Public Value As Single
+        Public Value As Integer
         Public Hits(0) As Boolean
         Public Times(0) As DateTime
 
@@ -41,7 +50,7 @@
 
     Public Class ClsTcpData
         Public OpenPorts As New SortedSet(Of Integer)
-        Public Value(65535) As Single
+        Public Value(65535) As Integer
         Public Hits(0) As Boolean
         Public Ports(0) As Integer ' Not used by ping, naturally.
         Public Times(0) As DateTime
@@ -103,6 +112,7 @@
 
     Public Sub GetEmptiness()
         Dim HasMeta As Boolean = False
+        If CustomName <> "" Then HasMeta = True
         If MacAddress <> "" Then HasMeta = True
         If Manufacturer <> "" Then HasMeta = True
         If Comments.Count > 0 Then HasMeta = True

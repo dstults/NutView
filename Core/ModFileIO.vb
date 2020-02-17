@@ -1,10 +1,11 @@
 ﻿Partial Module ModFileIO
 
-    Public Enum FileTask
+    Public Enum FTask
         Idle
         Test
         Import
         Save
+        AutoClose
     End Enum
 
     Private Enum FType
@@ -18,8 +19,58 @@
 
     Private InputMode As Integer = FType.NutCheck
     Private InputTime As DateTime = DateTime.Now
+    Private CurrentProgress As Integer
+    Private MyFileList() As String
 
-    Public Sub ParseFile(FilePath As String)
+    Public Sub ImportFiles(FilePaths() As String)
+
+        Dim MyProgress As New FormProgress(FTask.Import)
+        MyProgress.Show()
+
+        CurrentProgress = 0
+        MyFileList = FilePaths
+        NextFile()
+
+    End Sub
+
+    Public Function ContinueImport() As Integer
+        Dim result As Integer
+        If MyFileList.Count > 1 Then
+            CurrentProgress += 1
+            NextFile()
+            result = CInt(98 * CurrentProgress / (MyFileList.Count - 1))
+            If CurrentProgress = MyFileList.Count - 1 Then result = 100
+        Else
+            result = 100
+        End If
+        If result = 100 Then OptimizeHostList()
+
+        Return result
+    End Function
+
+    Private Sub OptimizeHostList()
+        ' Optimization is good!
+        KnownHosts.Clear()
+        EmptyHosts.Clear()
+        For Each aHost In AllHosts
+            If aHost.IsEmpty Then
+                EmptyHosts.Add(aHost)
+            Else
+                KnownHosts.Add(aHost)
+            End If
+        Next
+    End Sub
+
+    Private Sub NextFile()
+        Try
+            ImportFile(MyFileList(CurrentProgress))
+        Catch ex As Exception
+            MsgBox("Error loading/parsing file:" & vbNewLine & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub ImportFile(FilePath As String)
+
         Dim FileInput() As String = IO.File.ReadAllLines(FilePath)
         For Each iLine As String In FileInput
             Dim iPart() As String = Split(iLine, ",")
@@ -55,21 +106,7 @@
                 Case FType.Metasploit
             End Select
         Next
-        ' Optimization is good!
-        KnownHosts.Clear()
-        EmptyHosts.Clear()
-        For Each aHost In AllHosts
-            If aHost.IsEmpty Then
-                EmptyHosts.Add(aHost)
-            Else
-                KnownHosts.Add(aHost)
-            End If
-        Next
-        'MsgBox("File Import Complete", vbOKOnly)
-    End Sub
 
-    Public Function ContinueLoading() As Integer
-        Return 0
-    End Function
+    End Sub
 
 End Module

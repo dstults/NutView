@@ -37,7 +37,7 @@ Partial Class FormProgress
         Me.BtnOK.Location = New System.Drawing.Point(430, 198)
         Me.BtnOK.Name = "BtnOK"
         Me.BtnOK.Size = New System.Drawing.Size(123, 39)
-        Me.BtnOK.TabIndex = 5
+        Me.BtnOK.TabIndex = 0
         Me.BtnOK.Text = "Waiting..."
         Me.BtnOK.UseVisualStyleBackColor = True
         '

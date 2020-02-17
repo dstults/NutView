@@ -22,8 +22,8 @@ Partial Class FormNutView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormNutView))
         Me.DataDisplay = New System.Windows.Forms.DataGridView()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -55,24 +55,24 @@ Partial Class FormNutView
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataDisplay.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Consolas", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataDisplay.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Consolas", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataDisplay.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.DataDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataDisplay.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 8.0!)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataDisplay.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Consolas", 8.0!)
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataDisplay.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataDisplay.Location = New System.Drawing.Point(6, 44)
         Me.DataDisplay.Name = "DataDisplay"
         Me.DataDisplay.RowHeadersVisible = False
@@ -83,26 +83,31 @@ Partial Class FormNutView
         '
         Me.Column1.HeaderText = "Custom Name"
         Me.Column1.Name = "Column1"
+        Me.Column1.Width = 120
         '
         'Column2
         '
         Me.Column2.HeaderText = "IP Address"
         Me.Column2.Name = "Column2"
+        Me.Column2.Width = 120
         '
         'Column3
         '
         Me.Column3.HeaderText = "MAC Address"
         Me.Column3.Name = "Column3"
+        Me.Column3.Width = 140
         '
         'Column4
         '
         Me.Column4.HeaderText = "Manufacturer"
         Me.Column4.Name = "Column4"
+        Me.Column4.Width = 140
         '
         'Column5
         '
         Me.Column5.HeaderText = "Hostname"
         Me.Column5.Name = "Column5"
+        Me.Column5.Width = 120
         '
         'Column6
         '
@@ -132,6 +137,7 @@ Partial Class FormNutView
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         Me.OpenFileDialog1.Filter = "All Files|*.*|CSVs|*.csv"
+        Me.OpenFileDialog1.Multiselect = True
         '
         'SaveFileDialog1
         '
@@ -194,6 +200,7 @@ Partial Class FormNutView
         Me.Button1.TabIndex = 8
         Me.Button1.Text = "Demo"
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'FormNutView
         '
@@ -226,12 +233,12 @@ Partial Class FormNutView
     Friend WithEvents Label1 As Label
     Friend WithEvents ChkAutoPort As CheckBox
     Friend WithEvents BtnClear As Button
+    Friend WithEvents BtnSave2 As Button
+    Friend WithEvents Button1 As Button
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
-    Friend WithEvents BtnSave2 As Button
-    Friend WithEvents Button1 As Button
 End Class

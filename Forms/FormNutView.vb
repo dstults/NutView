@@ -1,6 +1,7 @@
 ﻿Public Class FormNutView
 
     Private ShownPorts As New SortedSet(Of Integer)
+    Private FinishedLoading As Boolean = False
 
     Private Enum CT
         CustomName
@@ -22,12 +23,7 @@
             Case DialogResult.Cancel, DialogResult.Abort
                 ' Do Nothing
             Case Else
-                Try
-                    ParseFile(OpenFileDialog1.FileName)
-                Catch ex As Exception
-                    MsgBox("Error loading/parsing file:" & vbNewLine & ex.Message)
-                End Try
-                RedoColumns()
+                ImportFiles(OpenFileDialog1.FileNames)
         End Select
     End Sub
 
@@ -37,29 +33,15 @@
             DataDisplay.Rows.Add()
             Dim jRow As Integer = DataDisplay.Rows.Count - 1 ' (-1 header & -1 adder)
 
-            Dim strCustomName As String = aHost.CustomName
-            If strCustomName = "" Then strCustomName = "-"
-            DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = strCustomName
+            DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = aHost.CustomName
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.CustomName))
-
-            Dim strIP As String = aHost.IP
-            If strIP = "" Then strIP = "-"
-            DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = strIP
+            DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = aHost.IP
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.IpAddress))
-
-            Dim strMacAddress As String = aHost.MacAddress
-            If strMacAddress = "" Then strMacAddress = "-"
-            DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = strMacAddress
+            DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = aHost.MacAddress
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.MacAddress))
-
-            Dim strManufacturer As String = aHost.Manufacturer
-            If strManufacturer = "" Then strManufacturer = "-"
-            DataDisplay.Rows(jRow).Cells(CT.Manufacturer).Value = strManufacturer
+            DataDisplay.Rows(jRow).Cells(CT.Manufacturer).Value = aHost.Manufacturer
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Manufacturer))
-
-            Dim strHostname As String = aHost.HostName
-            If strHostname = "" Then strHostname = "-"
-            DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = strHostname
+            DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = aHost.HostName
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Hostname))
 
             DataDisplay.Rows(jRow).Cells(CT.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
@@ -87,6 +69,7 @@
             Next
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(DataDisplay.Columns.Count - 1))
         Next
+        FinishedLoading = True
     End Sub
 
     Private Sub DoCellBestColorCheck(myCell As DataGridViewCell)
@@ -139,6 +122,7 @@
     End Sub
 
     Private Sub RedoColumns()
+        FinishedLoading = False
         Do Until DataDisplay.Columns.Count <= CT.Ports
             DataDisplay.Columns.Remove(DataDisplay.Columns(CT.Ports))
         Loop
@@ -198,7 +182,35 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim MyProgress As New FormProgress(FileTask.Test)
+        Dim MyProgress As New FormProgress(FTask.Test)
         MyProgress.Show()
     End Sub
+
+    Private Sub DataDisplay_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DataDisplay.CellValueChanged
+        If FinishedLoading Then
+            Dim outTxt As String = DataDisplay.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            If outTxt = "-" Then outTxt = ""
+            Select Case e.ColumnIndex
+                Case CT.CustomName
+                    KnownHosts(e.RowIndex).CustomName = outTxt
+                Case CT.Hostname
+                    KnownHosts(e.RowIndex).HostName = outTxt
+                Case CT.IpAddress
+                    KnownHosts(e.RowIndex).IP = outTxt
+                Case CT.MacAddress
+                    KnownHosts(e.RowIndex).MacAddress = outTxt
+                Case CT.Manufacturer
+                    KnownHosts(e.RowIndex).Manufacturer = outTxt
+                Case DataDisplay.Columns.Count - 1 ' comments
+                    KnownHosts(e.RowIndex).Comments.Clear()
+                    KnownHosts(e.RowIndex).Comments.Add(outTxt)
+            End Select
+            DoCellBestColorCheck(DataDisplay.Rows(e.RowIndex).Cells(e.ColumnIndex))
+        End If
+    End Sub
+
+    Public Sub RefreshDisplay()
+        RedoColumns()
+    End Sub
+
 End Class
