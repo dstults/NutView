@@ -2,6 +2,7 @@
 
     Public Enum FileTask
         Idle
+        Test
         Import
         Save
     End Enum

@@ -1,6 +1,9 @@
-﻿Public Class FormProgress
+﻿Imports System.ComponentModel
+
+Public Class FormProgress
 
     Public MyTask As Integer
+    Private StartTime As DateTime
 
     Public Sub New(aTask As Integer)
 
@@ -12,8 +15,13 @@
     End Sub
 
     Private Sub FormFileProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        StartTime = DateTime.Now
         MainWindow.Enabled = False
         Select Case MyTask
+            Case FileTask.Test
+                Me.Enabled = False
+                Me.Text = "Testing!"
+                Label1.Text = "Testing...this should be super fast..."
             Case FileTask.Import
                 Me.Enabled = False
                 Me.Text = "Importing!"
@@ -26,9 +34,7 @@
     End Sub
 
     Private Sub BtnOK_Click(sender As Object, e As EventArgs) Handles BtnOK.Click
-        MainWindow.Enabled = True
         Me.Close()
-        Me.Dispose()
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -37,26 +43,39 @@
                 Timer1.Enabled = False
                 BtnOK.Enabled = True
                 BtnOK.Text = "CRAZY!"
+            Case FileTask.Test
+                ProgressBar1.Value += 1
+                If ProgressBar1.Value >= 100 Then
+                    ShowCompletion("Test")
+                End If
             Case FileTask.Import
                 ProgressBar1.Value = ContinueLoading()
                 If ProgressBar1.Value >= 100 Then
-                    Me.Enabled = True
-                    Me.Text = "Import Complete!"
-                    Label1.Text = "Import Complete!"
-                    BtnOK.Enabled = True
-                    BtnOK.Text = "Great!"
-                    Timer1.Enabled = False
+                    ShowCompletion("Import")
                 End If
             Case FileTask.Save
                 ProgressBar1.Value = ContinueSaving()
                 If ProgressBar1.Value >= 100 Then
-                    Me.Enabled = True
-                    Me.Text = "Save Complete!"
-                    Label1.Text = "Save Complete!"
-                    BtnOK.Enabled = True
-                    BtnOK.Text = "Great!"
-                    Timer1.Enabled = False
+                    ShowCompletion("Save")
                 End If
         End Select
+    End Sub
+
+    Private Sub ShowCompletion(WhatDone As String)
+        Me.Enabled = True
+        Me.Text = WhatDone & " Complete!"
+        Dim ts As TimeSpan = DateTime.Now - StartTime
+        Label1.Text = WhatDone & " Complete! Time Elapsed: " & ts.TotalSeconds & " s"
+        BtnOK.Enabled = True
+        BtnOK.Text = "Great!"
+        Timer1.Enabled = False
+    End Sub
+
+    Private Sub FormProgress_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        MainWindow.Enabled = True
+    End Sub
+
+    Private Sub FormProgress_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        Me.Dispose()
     End Sub
 End Class

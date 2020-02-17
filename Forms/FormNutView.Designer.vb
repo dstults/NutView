@@ -41,6 +41,7 @@ Partial Class FormNutView
         Me.ChkAutoPort = New System.Windows.Forms.CheckBox()
         Me.BtnClear = New System.Windows.Forms.Button()
         Me.BtnSave2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -185,10 +186,20 @@ Partial Class FormNutView
         Me.BtnSave2.Text = "Save Short"
         Me.BtnSave2.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(6, 321)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(71, 35)
+        Me.Button1.TabIndex = 8
+        Me.Button1.Text = "Demo"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'FormNutView
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(820, 358)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.BtnSave2)
         Me.Controls.Add(Me.BtnClear)
         Me.Controls.Add(Me.ChkAutoPort)
@@ -222,4 +233,5 @@ Partial Class FormNutView
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents BtnSave2 As Button
+    Friend WithEvents Button1 As Button
 End Class

@@ -9,6 +9,11 @@
 
                 Do
                     Select Case LCase(iPart(intA))
+                        Case "nutview"
+                            If iPart.Length > 1 Then
+                                intA += 1
+                                InputTime = CDate(iPart(intA))
+                            End If
                         Case "custom name"
                             intA += 1
                             aHost.CustomName = iPart(intA)
