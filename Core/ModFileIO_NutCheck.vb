@@ -21,6 +21,7 @@
                 End If
                 Dim tcpMode As Boolean = False
                 Dim udpMode As Boolean = False
+                Dim commentMode As Boolean = False
                 Dim intA As Integer = 1
                 Do Until intA >= iPart.Count
                     Select Case iPart(intA)
@@ -31,9 +32,15 @@
                         Case "tcp"
                             tcpMode = True
                             udpMode = False
+                            commentMode = False
                         Case "udp"
                             tcpMode = False
                             udpMode = True
+                            commentMode = False
+                        Case "comment"
+                            tcpMode = False
+                            udpMode = False
+                            commentMode = True
                         Case Else
                             If tcpMode Then
                                 Select Case Left(iPart(intA), 1)
@@ -44,8 +51,14 @@
                                         Dim aPort As Integer = CInt(Mid(iPart(intA), 2))
                                         aHost.Tcp.Add(False, aPort, InputTime)
                                     Case Else
+                                        If LCase(iPart(intA)) = "comment" Then
+                                            commentMode = True
+                                            tcpMode = False
+                                        End If
                                         ' DO NOTHING
                                 End Select
+                            ElseIf commentMode Then
+                                aHost.Comments.Add(iPart(intA))
                             End If
                     End Select
                     aHost.GetEmptiness()

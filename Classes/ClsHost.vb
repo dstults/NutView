@@ -10,7 +10,7 @@
                 Value = 1
             ElseIf Value > 0 Then
                 Value -= 0.1
-                If Value < 0 Then Value = 0
+                If Value < 0 Then Value = 0.1 ' DON'T EVER LET IT COMPLETELY DIE OUT.
             End If
             Dim PingHits As Integer
             If Times(0) = Nothing Then
@@ -39,7 +39,7 @@
             ElseIf Value(aPort) > 0 Then
                 Value(aPort) -= 0.1
                 If Value(aPort) <= 0 Then
-                    Value(aPort) = 0
+                    Value(aPort) = 0.1 ' DON'T EVER LET IT COMPLETELY DIE OUT.
                 End If
                 OpenPorts.Remove(aPort)
             End If

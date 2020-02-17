@@ -26,20 +26,21 @@ Partial Class FormNutView
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormNutView))
         Me.DataDisplay = New System.Windows.Forms.DataGridView()
-        Me.BtnImport = New System.Windows.Forms.Button()
-        Me.BtnSave = New System.Windows.Forms.Button()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.TxtPorts = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.ChkAutoPort = New System.Windows.Forms.CheckBox()
-        Me.BtnClear = New System.Windows.Forms.Button()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BtnImport = New System.Windows.Forms.Button()
+        Me.BtnSave1 = New System.Windows.Forms.Button()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.TxtPorts = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ChkAutoPort = New System.Windows.Forms.CheckBox()
+        Me.BtnClear = New System.Windows.Forms.Button()
+        Me.BtnSave2 = New System.Windows.Forms.Button()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -74,75 +75,8 @@ Partial Class FormNutView
         Me.DataDisplay.Location = New System.Drawing.Point(6, 44)
         Me.DataDisplay.Name = "DataDisplay"
         Me.DataDisplay.RowHeadersVisible = False
-        Me.DataDisplay.Size = New System.Drawing.Size(734, 302)
+        Me.DataDisplay.Size = New System.Drawing.Size(802, 302)
         Me.DataDisplay.TabIndex = 0
-        '
-        'BtnImport
-        '
-        Me.BtnImport.Location = New System.Drawing.Point(83, 3)
-        Me.BtnImport.Name = "BtnImport"
-        Me.BtnImport.Size = New System.Drawing.Size(71, 35)
-        Me.BtnImport.TabIndex = 1
-        Me.BtnImport.Text = "Import"
-        Me.BtnImport.UseVisualStyleBackColor = True
-        '
-        'BtnSave
-        '
-        Me.BtnSave.Location = New System.Drawing.Point(160, 3)
-        Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(71, 35)
-        Me.BtnSave.TabIndex = 2
-        Me.BtnSave.Text = "Save"
-        Me.BtnSave.UseVisualStyleBackColor = True
-        '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        Me.OpenFileDialog1.Filter = "All Files|*.*|CSVs|*.csv"
-        '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.Filter = "All Files|*.*|CSVs|*.csv"
-        '
-        'TxtPorts
-        '
-        Me.TxtPorts.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtPorts.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
-        Me.TxtPorts.Location = New System.Drawing.Point(334, 7)
-        Me.TxtPorts.Name = "TxtPorts"
-        Me.TxtPorts.Size = New System.Drawing.Size(406, 24)
-        Me.TxtPorts.TabIndex = 3
-        Me.TxtPorts.Text = "7 13 17 20 21 22 53 80 139 143 443 445 1723 3389 5900"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
-        Me.Label1.Location = New System.Drawing.Point(237, 10)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(48, 18)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Ports:"
-        '
-        'ChkAutoPort
-        '
-        Me.ChkAutoPort.AutoSize = True
-        Me.ChkAutoPort.Location = New System.Drawing.Point(285, 13)
-        Me.ChkAutoPort.Name = "ChkAutoPort"
-        Me.ChkAutoPort.Size = New System.Drawing.Size(48, 17)
-        Me.ChkAutoPort.TabIndex = 5
-        Me.ChkAutoPort.Text = "Auto"
-        Me.ChkAutoPort.UseVisualStyleBackColor = True
-        '
-        'BtnClear
-        '
-        Me.BtnClear.Location = New System.Drawing.Point(6, 3)
-        Me.BtnClear.Name = "BtnClear"
-        Me.BtnClear.Size = New System.Drawing.Size(71, 35)
-        Me.BtnClear.TabIndex = 6
-        Me.BtnClear.Text = "Clear"
-        Me.BtnClear.UseVisualStyleBackColor = True
         '
         'Column1
         '
@@ -175,15 +109,92 @@ Partial Class FormNutView
         Me.Column6.Name = "Column6"
         Me.Column6.Width = 30
         '
+        'BtnImport
+        '
+        Me.BtnImport.Location = New System.Drawing.Point(83, 3)
+        Me.BtnImport.Name = "BtnImport"
+        Me.BtnImport.Size = New System.Drawing.Size(71, 35)
+        Me.BtnImport.TabIndex = 1
+        Me.BtnImport.Text = "Import"
+        Me.BtnImport.UseVisualStyleBackColor = True
+        '
+        'BtnSave1
+        '
+        Me.BtnSave1.Location = New System.Drawing.Point(160, 3)
+        Me.BtnSave1.Name = "BtnSave1"
+        Me.BtnSave1.Size = New System.Drawing.Size(71, 35)
+        Me.BtnSave1.TabIndex = 2
+        Me.BtnSave1.Text = "Save Full"
+        Me.BtnSave1.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        Me.OpenFileDialog1.Filter = "All Files|*.*|CSVs|*.csv"
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.Filter = "All Files|*.*|CSVs|*.csv"
+        '
+        'TxtPorts
+        '
+        Me.TxtPorts.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TxtPorts.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
+        Me.TxtPorts.Location = New System.Drawing.Point(411, 7)
+        Me.TxtPorts.Name = "TxtPorts"
+        Me.TxtPorts.Size = New System.Drawing.Size(397, 24)
+        Me.TxtPorts.TabIndex = 3
+        Me.TxtPorts.Text = "7 13 17 20 21 22 53 80 139 143 443 445 1723 3389 5900"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
+        Me.Label1.Location = New System.Drawing.Point(314, 10)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(48, 18)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "Ports:"
+        '
+        'ChkAutoPort
+        '
+        Me.ChkAutoPort.AutoSize = True
+        Me.ChkAutoPort.Location = New System.Drawing.Point(362, 13)
+        Me.ChkAutoPort.Name = "ChkAutoPort"
+        Me.ChkAutoPort.Size = New System.Drawing.Size(48, 17)
+        Me.ChkAutoPort.TabIndex = 5
+        Me.ChkAutoPort.Text = "Auto"
+        Me.ChkAutoPort.UseVisualStyleBackColor = True
+        '
+        'BtnClear
+        '
+        Me.BtnClear.Location = New System.Drawing.Point(6, 3)
+        Me.BtnClear.Name = "BtnClear"
+        Me.BtnClear.Size = New System.Drawing.Size(71, 35)
+        Me.BtnClear.TabIndex = 6
+        Me.BtnClear.Text = "Clear"
+        Me.BtnClear.UseVisualStyleBackColor = True
+        '
+        'BtnSave2
+        '
+        Me.BtnSave2.Location = New System.Drawing.Point(237, 3)
+        Me.BtnSave2.Name = "BtnSave2"
+        Me.BtnSave2.Size = New System.Drawing.Size(71, 35)
+        Me.BtnSave2.TabIndex = 7
+        Me.BtnSave2.Text = "Save Short"
+        Me.BtnSave2.UseVisualStyleBackColor = True
+        '
         'FormNutView
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(752, 358)
+        Me.ClientSize = New System.Drawing.Size(820, 358)
+        Me.Controls.Add(Me.BtnSave2)
         Me.Controls.Add(Me.BtnClear)
         Me.Controls.Add(Me.ChkAutoPort)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TxtPorts)
-        Me.Controls.Add(Me.BtnSave)
+        Me.Controls.Add(Me.BtnSave1)
         Me.Controls.Add(Me.BtnImport)
         Me.Controls.Add(Me.DataDisplay)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -197,7 +208,7 @@ Partial Class FormNutView
 
     Friend WithEvents DataDisplay As DataGridView
     Friend WithEvents BtnImport As Button
-    Friend WithEvents BtnSave As Button
+    Friend WithEvents BtnSave1 As Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents TxtPorts As TextBox
@@ -210,4 +221,5 @@ Partial Class FormNutView
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents BtnSave2 As Button
 End Class

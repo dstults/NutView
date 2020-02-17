@@ -172,13 +172,13 @@
         RedoColumns()
     End Sub
 
-    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+    Private Sub BtnSave1_Click(sender As Object, e As EventArgs) Handles BtnSave1.Click
         SaveFileDialog1.FileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm") & " NutView.csv"
         Select Case SaveFileDialog1.ShowDialog()
             Case DialogResult.Cancel, DialogResult.Abort
                 ' Do nothing
             Case Else
-                SaveNutView(SaveFileDialog1.FileName)
+                SaveNutView(SaveFileDialog1.FileName, True)
         End Select
     End Sub
 
@@ -186,4 +186,14 @@
         Application.Exit()
     End Sub
 
+    Private Sub BtnSave2_Click(sender As Object, e As EventArgs) Handles BtnSave2.Click
+        SaveFileDialog1.FileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm") & " NutView.csv"
+        Select Case SaveFileDialog1.ShowDialog()
+            Case DialogResult.Cancel, DialogResult.Abort
+                ' Do nothing
+            Case Else
+                SaveNutView(SaveFileDialog1.FileName, False)
+        End Select
+
+    End Sub
 End Class

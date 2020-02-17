@@ -14,9 +14,9 @@
     Private Sub FormFileProgress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MainWindow.Enabled = False
         Select Case MyTask
-            Case FileTask.Load
-                Me.Text = "Loading!"
-                Label1.Text = "Loading...this should be fast..."
+            Case FileTask.Import
+                Me.Text = "Importing!"
+                Label1.Text = "Importing...this should be fast..."
             Case FileTask.Save
                 Me.Text = "Saving!"
                 Label1.Text = "Saving...this may take a while..."
@@ -35,10 +35,11 @@
                 Timer1.Enabled = False
                 BtnOK.Enabled = True
                 BtnOK.Text = "CRAZY!"
-            Case FileTask.Load
-                ' Not done yet.
-                'ProgressBar1.Value = ContinueLoading()
+            Case FileTask.Import
+                ProgressBar1.Value = ContinueLoading()
                 If ProgressBar1.Value >= 100 Then
+                    Me.Text = "Importing!"
+                    Label1.Text = "Import Complete!"
                     BtnOK.Enabled = True
                     BtnOK.Text = "Great!"
                     Timer1.Enabled = False
@@ -46,6 +47,8 @@
             Case FileTask.Save
                 ProgressBar1.Value = ContinueSaving()
                 If ProgressBar1.Value >= 100 Then
+                    Me.Text = "Save Complete!"
+                    Label1.Text = "Save Complete!"
                     BtnOK.Enabled = True
                     BtnOK.Text = "Great!"
                     Timer1.Enabled = False

@@ -2,20 +2,34 @@
 
     Private CurrentProgress As Integer
     Private MyOutputFile As String
+    Private OutputFull As Boolean = True
 
-    Public Sub SaveNutView(FilePath As String)
-        CurrentProgress = 0
+    Public Sub SaveNutView(FilePath As String, full As Boolean)
+
         MyOutputFile = FilePath
+        OutputFull = full
+
+        CurrentProgress = 0
+
         Dim MyProgress As New FormProgress(FileTask.Save)
         MyProgress.Show()
-        IO.File.WriteAllText(MyOutputFile, "NUTVIEW" & vbNewLine)
-        AppendHost(CurrentProgress)
+        Dim Header As String = "NUTVIEW"
+        Select Case OutputFull
+            Case True
+                Header &= " FULL"
+            Case False
+                Header &= " SHORT"
+        End Select
+
+        IO.File.WriteAllText(MyOutputFile, Header & vbNewLine)
+        AppendHost(CurrentProgress, OutputFull)
+
     End Sub
 
     Public Function ContinueSaving() As Integer
 
         CurrentProgress += 1
-        AppendHost(CurrentProgress)
+        AppendHost(CurrentProgress, True)
 
         Dim result As Integer = CInt(98 * CurrentProgress / AllHosts.Count)
         If CurrentProgress = AllHosts.Count - 1 Then result = 100
@@ -23,7 +37,7 @@
 
     End Function
 
-    Public Sub AppendHost(iHostNum As Integer)
+    Public Sub AppendHost(iHostNum As Integer, full As Boolean)
         Dim cDel As String = "," & vbTab ' Custom Delimeter
         Dim iHost As ClsHost = AllHosts(iHostNum)
 
@@ -33,29 +47,60 @@
         MachineReport &= cDel & "HOSTNAME" & cDel & iHost.HostName
         MachineReport &= cDel & "MAC" & cDel & iHost.MacAddress
         MachineReport &= cDel & "MANUFACTURER" & cDel & iHost.Manufacturer
-        If iHost.Ping.Hits.Count > 0 Then
-            For intA As Integer = 0 To iHost.Ping.Hits.Count - 1
-                Select Case iHost.Ping.Hits(intA)
-                    Case True
-                        MachineReport &= cDel & "+PING"
-                    Case False
-                        MachineReport &= cDel & "-PING"
-                End Select
-                MachineReport &= cDel & iHost.Ping.Times(intA)
-            Next
-        End If
-        If iHost.Tcp.Hits.Count > 0 Then
-            For intA As Integer = 0 To iHost.Tcp.Hits.Count - 1
-                Select Case iHost.Tcp.Hits(intA)
-                    Case True
-                        MachineReport &= cDel & "+TCP"
-                    Case False
-                        MachineReport &= cDel & "-TCP"
-                End Select
-                MachineReport &= cDel & iHost.Tcp.Ports(intA)
-                MachineReport &= cDel & iHost.Tcp.Times(intA)
-            Next
-        End If
+
+        If full Then ' FULL MODE ================================================
+
+            If iHost.Ping.Hits.Count > 0 Then
+                For intA As Integer = 0 To iHost.Ping.Hits.Count - 1
+                    Select Case iHost.Ping.Hits(intA)
+                        Case True
+                            MachineReport &= cDel & "+PING"
+                        Case False
+                            MachineReport &= cDel & "-PING"
+                    End Select
+                    MachineReport &= cDel & iHost.Ping.Times(intA)
+                Next
+            End If
+            If iHost.Tcp.Hits.Count > 0 Then
+                For intA As Integer = 0 To iHost.Tcp.Hits.Count - 1
+                    Select Case iHost.Tcp.Hits(intA)
+                        Case True
+                            MachineReport &= cDel & "+TCP"
+                        Case False
+                            MachineReport &= cDel & "-TCP"
+                    End Select
+                    MachineReport &= cDel & iHost.Tcp.Ports(intA)
+                    MachineReport &= cDel & iHost.Tcp.Times(intA)
+                Next
+            End If
+
+        Else ' SHORT MODE ================================================
+
+            If iHost.Ping.Hits.Count > 0 Then
+                For intA As Integer = 0 To iHost.Ping.Hits.Count - 1
+                    Select Case iHost.Ping.Hits(intA)
+                        Case True
+                            MachineReport &= cDel & "+PING"
+                        Case False
+                            MachineReport &= cDel & "-PING"
+                    End Select
+                    MachineReport &= cDel & iHost.Ping.Times(intA)
+                Next
+            End If
+            If iHost.Tcp.Hits.Count > 0 Then
+                For intA As Integer = 0 To iHost.Tcp.Hits.Count - 1
+                    Select Case iHost.Tcp.Hits(intA)
+                        Case True
+                            MachineReport &= cDel & "+TCP"
+                        Case False
+                            MachineReport &= cDel & "-TCP"
+                    End Select
+                    MachineReport &= cDel & iHost.Tcp.Ports(intA)
+                    MachineReport &= cDel & iHost.Tcp.Times(intA)
+                Next
+            End If
+
+        End If ' ================================================
         If iHost.Comments.Count > 0 Then
             For intA As Integer = 0 To iHost.Comments.Count - 1
                 MachineReport &= cDel & "COMMENT"

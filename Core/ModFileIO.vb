@@ -2,14 +2,15 @@
 
     Public Enum FileTask
         Idle
-        Load
+        Import
         Save
     End Enum
 
     Private Enum FType
         Unset
         NutCheck
-        NutView
+        NutViewFull
+        NutViewShort
         AdvancedIPScanner
         NetCat
         Metasploit
@@ -23,8 +24,10 @@
         For Each iLine As String In FileInput
             Dim iPart() As String = Split(iLine, ",")
             Select Case LCase(iPart(0))
-                Case "nutview", "host"
-                    InputMode = FType.NutView
+                Case "nutview", "nutview full"
+                    InputMode = FType.NutViewFull
+                Case "host", "nutview short"
+                    InputMode = FType.NutViewShort
                 Case "nutcheck", "test time", "input ips", "input ports", "timeout", "tests"
                     InputMode = FType.NutCheck
                 Case Else
@@ -41,7 +44,10 @@
         Next
         For Each iLine As String In FileInput
             Select Case InputMode
-                Case FType.NutView
+                Case FType.NutViewFull
+                    Dim iPart() As String = Split(iLine, "," & vbTab)
+                    NutViewImport(iPart)
+                Case FType.NutViewShort
                     Dim iPart() As String = Split(iLine, "," & vbTab)
                     NutViewImport(iPart)
                 Case FType.NutCheck
@@ -66,5 +72,9 @@
         Next
         'MsgBox("File Import Complete", vbOKOnly)
     End Sub
+
+    Public Function ContinueLoading() As Integer
+        Return 0
+    End Function
 
 End Module
