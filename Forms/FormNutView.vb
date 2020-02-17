@@ -45,17 +45,17 @@
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Hostname))
 
             DataDisplay.Rows(jRow).Cells(CT.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
-            If aHost.Ping.Value >= 0.8 Then
+            If aHost.Ping.Value >= NetState.MissingNew Then
                 DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "."
-            ElseIf aHost.Ping.Value > 0 Then
+            ElseIf aHost.Ping.Value = NetState.MissingStale Then
                 DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "!"
             End If
 
             For intA As Integer = 0 To ShownPorts.Count - 1
                 DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
-                If aHost.Tcp.Value(ShownPorts(intA)) >= 0.8 Then
+                If aHost.Tcp.Value(ShownPorts(intA)) >= NetState.MissingNew Then
                     DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "."
-                ElseIf aHost.Tcp.Value(ShownPorts(intA)) > 0 Then
+                ElseIf aHost.Tcp.Value(ShownPorts(intA)) = NetState.MissingStale Then
                     DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "!"
                 End If
             Next
@@ -86,28 +86,20 @@
 
     Private Function GetColorFromValue(aVal As Single) As Color
         Select Case aVal
-            Case Is >= 1
-                Return Color.FromArgb(128, 255, 128)
-            Case Is >= 0.9
-                Return Color.FromArgb(0, 205, 0) ' GREEN
-            Case Is >= 0.8
-                Return Color.FromArgb(85, 205, 0)
-            Case Is >= 0.7
-                Return Color.FromArgb(171, 205, 0)
-            Case Is >= 0.6
-                Return Color.FromArgb(255, 205, 0) ' YELLOW
-            Case Is >= 0.5
-                Return Color.FromArgb(255, 171, 0)
-            Case Is >= 0.4
-                Return Color.FromArgb(255, 85, 0)
-            Case Is >= 0.3
-                Return Color.FromArgb(255, 0, 0) ' RED
-            Case Is >= 0.2
-                Return Color.FromArgb(171, 0, 0)
-            Case Is >= 0.1
-                Return Color.FromArgb(85, 0, 0)
-            Case Is < 0.1
-                Return Color.FromArgb(0, 0, 0)
+            Case NetState.Untested
+                Return Color.Black
+            Case NetState.Dead
+                Return Color.Black
+            Case NetState.MissingStale
+                Return Color.Red
+            Case NetState.MissingNew
+                Return Color.Yellow
+            Case NetState.AliveStale
+                Return Color.Green
+            Case NetState.AliveNew
+                Return Color.Aqua
+            Case Else
+                Return Color.Orange
         End Select
     End Function
 

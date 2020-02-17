@@ -10,6 +10,15 @@ Module ModCore
     Public KnownHosts As New HashSet(Of ClsHost)
     Public EmptyHosts As New HashSet(Of ClsHost)
 
+    Public Enum NetState
+        Untested ' Dark Gray
+        Dead ' Black
+        MissingStale ' Red
+        MissingNew ' Yellow
+        AliveStale ' Green
+        AliveNew ' Aqua
+    End Enum
+
     Public Sub Main()
         MainWindow.Show()
         Application.Run()
