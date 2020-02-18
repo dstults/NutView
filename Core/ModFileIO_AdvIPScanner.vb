@@ -17,22 +17,17 @@
                 AllHosts.Add(aHost)
                 aHost.IP = iPart(2)
             End If
-            If iPart(0) = "Dead" Then aHost.Ping.Add(False, InputTime)
             If iPart(1) <> iPart(2) Then aHost.HostName = iPart(1)
             If iPart(4) <> "" Then
-                aHost.Tcp.Add(True, 80, InputTime)
                 aHost.Comments.Add("HTTP=" & iPart(4))
             End If
             If iPart(5) <> "" Then
-                aHost.Tcp.Add(True, 443, InputTime)
                 aHost.Comments.Add("HTTPS=" & iPart(5))
             End If
             If iPart(6) <> "" Then
-                aHost.Tcp.Add(True, 21, InputTime)
                 aHost.Comments.Add("FTP=" & iPart(6))
             End If
             If iPart(7) <> "" Then
-                aHost.Tcp.Add(True, 3389, InputTime)
                 aHost.Comments.Add("RDP=" & iPart(7))
             End If
             If iPart(8) <> "" Then aHost.Comments.Add("Shared Folders=" & iPart(8))
@@ -45,7 +40,7 @@
                 If aHost.MacAddress = "" Then
                     aHost.MacAddress = iPart(12)
                 Else
-                    If Not aHost.MacAddress.Contains(iPart(12)) Then aHost.MacAddress &= "," & iPart(12)
+                    If Not aHost.MacAddress.Contains(iPart(12)) Then aHost.MacAddress &= " & " & iPart(12)
                 End If
             End If
         End If

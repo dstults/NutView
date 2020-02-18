@@ -82,15 +82,10 @@
     Private Sub MergeHosts(aHost As ClsHost, bHost As ClsHost)
         ' bhost is already in allhosts
         CheckMergeStrings(aHost.CustomName, bHost.CustomName)
-        If bHost.CustomName.Contains("&") Then bHost.Comments.Add("CUSTOM NAME CONFLICT")
         CheckMergeStrings(aHost.IP, bHost.IP)
-        If bHost.IP.Contains("&") Then bHost.Comments.Add("IP ADDRESS CONFLICT")
         CheckMergeStrings(aHost.MacAddress, bHost.MacAddress)
-        If bHost.MacAddress.Contains("&") Then bHost.Comments.Add("MAC ADDRESS CONFLICT")
         CheckMergeStrings(aHost.Manufacturer, bHost.Manufacturer)
-        If bHost.Manufacturer.Contains("&") Then bHost.Comments.Add("MANUFACTURER CONFLICT")
         CheckMergeStrings(aHost.HostName, bHost.HostName)
-        If bHost.HostName.Contains("&") Then bHost.Comments.Add("HOSTNAME CONFLICT")
         For intA As Integer = 0 To aHost.Ping.Hits.Count - 1
             If bHost.Ping.Times.Contains(aHost.Ping.Times(intA)) Then
                 ' SOMETHING MIGHT BE MESSED UP -- BUT IGNORE FOR NOW
