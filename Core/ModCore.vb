@@ -3,7 +3,7 @@
 
 Module ModCore
 
-    Public ProgVersion As String = "v0.5"
+    Public ProgVersion As String = "v0.6"
     Public MainWindow As New FormNutView
 
     Public AllHosts As New List(Of ClsHost)
