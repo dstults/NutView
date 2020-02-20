@@ -43,23 +43,10 @@
         Else
             result = 100
         End If
-        If result = 100 Then OptimizeHostList()
+        If result = 100 Then GetKnownHosts()
 
         Return result
     End Function
-
-    Private Sub OptimizeHostList()
-        ' Optimization is good!
-        KnownHosts.Clear()
-        EmptyHosts.Clear()
-        For Each aHost In AllHosts
-            If aHost.IsEmpty Then
-                EmptyHosts.Add(aHost)
-            Else
-                KnownHosts.Add(aHost)
-            End If
-        Next
-    End Sub
 
     Private Sub NextFile()
         Try

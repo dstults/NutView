@@ -6,20 +6,20 @@
         Public Times(0) As DateTime
 
         Public Sub New()
-            Value = NetState.Untested
+            Value = PortState.Untested
         End Sub
 
         Public Sub Add(aHit As Boolean, aDateTime As DateTime)
             Select Case Value
-                Case NetState.Untested, NetState.Dead
-                    If aHit Then Value = NetState.AliveNew
-                    If Not aHit Then Value = NetState.Dead
-                Case NetState.AliveNew, NetState.AliveStale
-                    If aHit Then Value = NetState.AliveStale
-                    If Not aHit Then Value = NetState.MissingNew
-                Case NetState.MissingNew, NetState.MissingStale
-                    If aHit Then Value = NetState.AliveNew
-                    If Not aHit Then Value = NetState.MissingStale
+                Case PortState.Untested, PortState.Dead
+                    If aHit Then Value = PortState.AliveNew
+                    If Not aHit Then Value = PortState.Dead
+                Case PortState.AliveNew, PortState.AliveStale
+                    If aHit Then Value = PortState.AliveStale
+                    If Not aHit Then Value = PortState.MissingNew
+                Case PortState.MissingNew, PortState.MissingStale
+                    If aHit Then Value = PortState.AliveNew
+                    If Not aHit Then Value = PortState.MissingStale
             End Select
             ArchivePings(aHit, aDateTime)
         End Sub
@@ -27,7 +27,7 @@
         Public Sub SetVal(aVal As Single, aDateTime As DateTime)
             Value = aVal
             Dim aHit As Boolean
-            If Value >= NetState.AliveStale Then aHit = True
+            If Value >= PortState.AliveStale Then aHit = True
             ArchivePings(aHit, aDateTime)
         End Sub
 
@@ -54,21 +54,21 @@
 
         Public Sub New()
             For intA As Integer = 0 To Value.Count - 1
-                Value(intA) = NetState.Untested
+                Value(intA) = PortState.Untested
             Next
         End Sub
 
         Public Sub Add(aHit As Boolean, aPort As Integer, aDateTime As DateTime)
             Select Case Value(aPort)
-                Case NetState.Untested, NetState.Dead
-                    If aHit Then Value(aPort) = NetState.AliveNew
-                    If Not aHit Then Value(aPort) = NetState.Dead
-                Case NetState.AliveNew, NetState.AliveStale
-                    If aHit Then Value(aPort) = NetState.AliveStale
-                    If Not aHit Then Value(aPort) = NetState.MissingNew
-                Case NetState.MissingNew, NetState.MissingStale
-                    If aHit Then Value(aPort) = NetState.AliveNew
-                    If Not aHit Then Value(aPort) = NetState.MissingStale
+                Case PortState.Untested, PortState.Dead
+                    If aHit Then Value(aPort) = PortState.AliveNew
+                    If Not aHit Then Value(aPort) = PortState.Dead
+                Case PortState.AliveNew, PortState.AliveStale
+                    If aHit Then Value(aPort) = PortState.AliveStale
+                    If Not aHit Then Value(aPort) = PortState.MissingNew
+                Case PortState.MissingNew, PortState.MissingStale
+                    If aHit Then Value(aPort) = PortState.AliveNew
+                    If Not aHit Then Value(aPort) = PortState.MissingStale
             End Select
             If aHit Then OpenPorts.Add(aPort)
             ArchiveTcps(aHit, aPort, aDateTime)
@@ -77,8 +77,8 @@
         Public Sub SetVal(aPort As Integer, aVal As Single, aDateTime As DateTime)
             Value(aPort) = aVal
             Dim aHit As Boolean
-            If Value(aPort) >= NetState.MissingStale Then OpenPorts.Add(aPort)
-            If Value(aPort) >= NetState.AliveStale Then aHit = True
+            If Value(aPort) >= PortState.MissingStale Then OpenPorts.Add(aPort)
+            If Value(aPort) >= PortState.AliveStale Then aHit = True
             ArchiveTcps(aHit, aPort, aDateTime)
         End Sub
 
@@ -118,7 +118,7 @@
         If MacAddress <> "" Then HasMeta = True
         If Manufacturer <> "" Then HasMeta = True
         If Comments.Count > 0 Then HasMeta = True
-        If HasMeta Or Ping.Value >= NetState.MissingStale Or Tcp.OpenPorts.Count > 0 Then IsEmpty = False Else IsEmpty = True
+        If HasMeta Or Ping.Value >= PortState.MissingStale Or Tcp.OpenPorts.Count > 0 Then IsEmpty = False Else IsEmpty = True
     End Sub
 
 End Class

@@ -1,9 +1,8 @@
 ﻿Public Class FormNutView
 
-    Private ShownPorts As New SortedSet(Of Integer)
     Private FinishedLoading As Boolean = False
 
-    Private Enum CT
+    Private Enum ColumnTag
         CustomName
         IpAddress
         MacAddress
@@ -14,6 +13,7 @@
     End Enum
 
     Private Sub FormNutView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.MinimumSize = New System.Drawing.Size(774, 421)
         Me.Text = "Darren's NutView " & ProgVersion
         RedoColumns()
     End Sub
@@ -29,34 +29,34 @@
 
     Private Sub ResetHosts()
         DataDisplay.Rows.Clear()
-        For Each aHost As ClsHost In KnownHosts
+        For Each aHost As ClsHost In ShownHosts
             DataDisplay.Rows.Add()
             Dim jRow As Integer = DataDisplay.Rows.Count - 1 ' (-1 header & -1 adder)
 
-            DataDisplay.Rows(jRow).Cells(CT.CustomName).Value = aHost.CustomName
-            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.CustomName))
-            DataDisplay.Rows(jRow).Cells(CT.IpAddress).Value = aHost.IP
-            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.IpAddress))
-            DataDisplay.Rows(jRow).Cells(CT.MacAddress).Value = aHost.MacAddress
-            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.MacAddress))
-            DataDisplay.Rows(jRow).Cells(CT.Manufacturer).Value = aHost.Manufacturer
-            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Manufacturer))
-            DataDisplay.Rows(jRow).Cells(CT.Hostname).Value = aHost.HostName
-            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(CT.Hostname))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.CustomName).Value = aHost.CustomName
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.CustomName))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.IpAddress).Value = aHost.IP
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.IpAddress))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.MacAddress).Value = aHost.MacAddress
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.MacAddress))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.Manufacturer).Value = aHost.Manufacturer
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.Manufacturer))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.Hostname).Value = aHost.HostName
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.Hostname))
 
-            DataDisplay.Rows(jRow).Cells(CT.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
-            If aHost.Ping.Value >= NetState.MissingNew Then
-                DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "."
-            ElseIf aHost.Ping.Value = NetState.MissingStale Then
-                DataDisplay.Rows(jRow).Cells(CT.Ping).Value = "!"
+            DataDisplay.Rows(jRow).Cells(ColumnTag.Ping).Style.BackColor = GetColorFromValue(aHost.Ping.Value)
+            If aHost.Ping.Value >= PortState.MissingNew Then
+                DataDisplay.Rows(jRow).Cells(ColumnTag.Ping).Value = "."
+            ElseIf aHost.Ping.Value = PortState.MissingStale Then
+                DataDisplay.Rows(jRow).Cells(ColumnTag.Ping).Value = "!"
             End If
 
             For intA As Integer = 0 To ShownPorts.Count - 1
-                DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
-                If aHost.Tcp.Value(ShownPorts(intA)) >= NetState.MissingNew Then
-                    DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "."
-                ElseIf aHost.Tcp.Value(ShownPorts(intA)) = NetState.MissingStale Then
-                    DataDisplay.Rows(jRow).Cells(CT.Ports + intA).Value = "!"
+                DataDisplay.Rows(jRow).Cells(ColumnTag.Ports + intA).Style.BackColor = GetColorFromValue(aHost.Tcp.Value(ShownPorts(intA)))
+                If aHost.Tcp.Value(ShownPorts(intA)) >= PortState.MissingNew Then
+                    DataDisplay.Rows(jRow).Cells(ColumnTag.Ports + intA).Value = "."
+                ElseIf aHost.Tcp.Value(ShownPorts(intA)) = PortState.MissingStale Then
+                    DataDisplay.Rows(jRow).Cells(ColumnTag.Ports + intA).Value = "!"
                 End If
             Next
 
@@ -86,18 +86,18 @@
 
     Private Function GetColorFromValue(aVal As Single) As Color
         Select Case aVal
-            Case NetState.Untested
+            Case PortState.Untested
                 Return Color.Black
-            Case NetState.Dead
+            Case PortState.Dead
                 Return Color.Black
-            Case NetState.MissingStale
+            Case PortState.MissingStale
                 Return Color.Red
-            Case NetState.MissingNew
+            Case PortState.MissingNew
                 Return Color.Yellow
-            Case NetState.AliveStale
+            Case PortState.AliveStale
                 Return Color.Green
-            Case NetState.AliveNew
-                Return Color.Aqua
+            Case PortState.AliveNew
+                Return Color.Aquamarine
             Case Else
                 Return Color.Orange
         End Select
@@ -114,9 +114,10 @@
     End Sub
 
     Private Sub RedoColumns()
+        GetShownHosts()
         FinishedLoading = False
-        Do Until DataDisplay.Columns.Count <= CT.Ports
-            DataDisplay.Columns.Remove(DataDisplay.Columns(CT.Ports))
+        Do Until DataDisplay.Columns.Count <= ColumnTag.Ports
+            DataDisplay.Columns.Remove(DataDisplay.Columns(ColumnTag.Ports))
         Loop
         If ChkAutoPort.Checked Then
             ShownPorts.Clear()
@@ -137,13 +138,14 @@
             DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
         Next
         DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, "Comments")
-        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 900
+        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 700
         ResetHosts()
     End Sub
 
     Private Sub BtnClear_Click(sender As Object, e As EventArgs) Handles BtnClear.Click
         AllHosts.Clear()
         KnownHosts.Clear()
+        ShownHosts.Clear()
         EmptyHosts.Clear()
         RedoColumns()
     End Sub
@@ -183,15 +185,15 @@
             Dim outTxt As String = DataDisplay.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             If outTxt = "-" Then outTxt = ""
             Select Case e.ColumnIndex
-                Case CT.CustomName
+                Case ColumnTag.CustomName
                     KnownHosts(e.RowIndex).CustomName = outTxt
-                Case CT.Hostname
+                Case ColumnTag.Hostname
                     KnownHosts(e.RowIndex).HostName = outTxt
-                Case CT.IpAddress
+                Case ColumnTag.IpAddress
                     KnownHosts(e.RowIndex).IP = outTxt
-                Case CT.MacAddress
+                Case ColumnTag.MacAddress
                     KnownHosts(e.RowIndex).MacAddress = outTxt
-                Case CT.Manufacturer
+                Case ColumnTag.Manufacturer
                     KnownHosts(e.RowIndex).Manufacturer = outTxt
                 Case DataDisplay.Columns.Count - 1 ' comments
                     KnownHosts(e.RowIndex).Comments.Clear()
@@ -202,6 +204,37 @@
     End Sub
 
     Public Sub RefreshDisplay()
+        RedoColumns()
+    End Sub
+
+    Private Sub TxtPorts_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtPorts.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            RedoColumns()
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub LblLegendA_Click(sender As Object, e As EventArgs) Handles LblLegendA1.Click, LblLegendA2.Click
+        ShownState(PortState.AliveNew) = Not ShownState(PortState.AliveNew)
+        If ShownState(PortState.AliveNew) Then LblLegendA2.BackColor = Color.Aquamarine Else LblLegendA2.BackColor = Color.Black
+        RedoColumns()
+    End Sub
+
+    Private Sub LblLegendB_Click(sender As Object, e As EventArgs) Handles LblLegendB1.Click, LblLegendB2.Click
+        ShownState(PortState.AliveStale) = Not ShownState(PortState.AliveStale)
+        If ShownState(PortState.AliveStale) Then LblLegendB2.BackColor = Color.Green Else LblLegendB2.BackColor = Color.Black
+        RedoColumns()
+    End Sub
+
+    Private Sub LblLegendC_Click(sender As Object, e As EventArgs) Handles LblLegendC1.Click, LblLegendC2.Click
+        ShownState(PortState.MissingNew) = Not ShownState(PortState.MissingNew)
+        If ShownState(PortState.MissingNew) Then LblLegendC2.BackColor = Color.Yellow Else LblLegendC2.BackColor = Color.Black
+        RedoColumns()
+    End Sub
+
+    Private Sub LblLegendD_Click(sender As Object, e As EventArgs) Handles LblLegendD1.Click, LblLegendD2.Click
+        ShownState(PortState.MissingStale) = Not ShownState(PortState.MissingStale)
+        If ShownState(PortState.MissingStale) Then LblLegendD2.BackColor = Color.Red Else LblLegendD2.BackColor = Color.Black
         RedoColumns()
     End Sub
 
