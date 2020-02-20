@@ -216,25 +216,49 @@
 
     Private Sub LblLegendA_Click(sender As Object, e As EventArgs) Handles LblLegendA1.Click, LblLegendA2.Click
         ShownState(PortState.AliveNew) = Not ShownState(PortState.AliveNew)
-        If ShownState(PortState.AliveNew) Then LblLegendA2.BackColor = Color.Aquamarine Else LblLegendA2.BackColor = Color.Black
+        If ShownState(PortState.AliveNew) Then
+            LblLegendA2.BackColor = Color.Aquamarine
+            LblLegendA2.ForeColor = Color.Black
+        Else
+            LblLegendA2.BackColor = Color.Black
+            LblLegendA2.ForeColor = Color.White
+        End If
         RedoColumns()
     End Sub
 
     Private Sub LblLegendB_Click(sender As Object, e As EventArgs) Handles LblLegendB1.Click, LblLegendB2.Click
         ShownState(PortState.AliveStale) = Not ShownState(PortState.AliveStale)
-        If ShownState(PortState.AliveStale) Then LblLegendB2.BackColor = Color.Green Else LblLegendB2.BackColor = Color.Black
+        If ShownState(PortState.AliveStale) Then
+            LblLegendB2.BackColor = Color.Green
+            LblLegendB2.ForeColor = Color.Black
+        Else
+            LblLegendB2.BackColor = Color.Black
+            LblLegendB2.ForeColor = Color.White
+        End If
         RedoColumns()
     End Sub
 
     Private Sub LblLegendC_Click(sender As Object, e As EventArgs) Handles LblLegendC1.Click, LblLegendC2.Click
         ShownState(PortState.MissingNew) = Not ShownState(PortState.MissingNew)
-        If ShownState(PortState.MissingNew) Then LblLegendC2.BackColor = Color.Yellow Else LblLegendC2.BackColor = Color.Black
+        If ShownState(PortState.MissingNew) Then
+            LblLegendC2.BackColor = Color.Yellow
+            LblLegendC2.ForeColor = Color.Black
+        Else
+            LblLegendC2.BackColor = Color.Black
+            LblLegendC2.ForeColor = Color.White
+        End If
         RedoColumns()
     End Sub
 
     Private Sub LblLegendD_Click(sender As Object, e As EventArgs) Handles LblLegendD1.Click, LblLegendD2.Click
         ShownState(PortState.MissingStale) = Not ShownState(PortState.MissingStale)
-        If ShownState(PortState.MissingStale) Then LblLegendD2.BackColor = Color.Red Else LblLegendD2.BackColor = Color.Black
+        If ShownState(PortState.MissingStale) Then
+            LblLegendD2.BackColor = Color.Red
+            LblLegendD2.ForeColor = Color.Black
+        Else
+            LblLegendD2.BackColor = Color.Black
+            LblLegendD2.ForeColor = Color.White
+        End If
         RedoColumns()
     End Sub
 
