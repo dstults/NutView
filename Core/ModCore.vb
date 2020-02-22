@@ -3,7 +3,7 @@
 
 Module ModCore
 
-    Public ProgVersion As String = "v0.59"
+    Public ProgVersion As String = "v0.60"
     Public MainWindow As New FormNutView
 
     Public AllHosts As New List(Of ClsHost)
@@ -63,5 +63,16 @@ Module ModCore
             If ShowThisHost Then ShownHosts.Add(iHost)
         Next
     End Sub
+
+    Public Function GetIpVal(ipAdd As String) As Int64
+        If ipAdd.Contains("&") Then Return 0
+        Dim ipVars() As String = Split(ipAdd, ".")
+        Dim result As Int64 = 0
+        result += ipVars(0) * 256 * 256 * 256
+        result += ipVars(1) * 256 * 256
+        result += ipVars(2) * 256
+        result += ipVars(3)
+        Return result
+    End Function
 
 End Module

@@ -138,7 +138,8 @@
             DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
         Next
         DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, "Comments")
-        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 700
+        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 550
+        DataDisplay.Columns(DataDisplay.Columns.Count - 1).ReadOnly = True
         ResetHosts()
     End Sub
 
@@ -175,11 +176,6 @@
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim MyProgress As New FormProgress(FTask.Test)
-        MyProgress.Show()
-    End Sub
-
     Private Sub DataDisplay_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles DataDisplay.CellValueChanged
         If FinishedLoading Then
             Dim outTxt As String = DataDisplay.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
@@ -196,11 +192,39 @@
                 Case ColumnTag.Manufacturer
                     KnownHosts(e.RowIndex).Manufacturer = outTxt
                 Case DataDisplay.Columns.Count - 1 ' comments
-                    KnownHosts(e.RowIndex).Comments.Clear()
-                    KnownHosts(e.RowIndex).Comments.Add(outTxt)
+                    'KnownHosts(e.RowIndex).Comments.Clear()
+                    'KnownHosts(e.RowIndex).Comments.Add(outTxt)
             End Select
             DoCellBestColorCheck(DataDisplay.Rows(e.RowIndex).Cells(e.ColumnIndex))
         End If
+    End Sub
+
+    Private Sub DataDisplay_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DataDisplay.ColumnHeaderMouseClick
+        If e.ColumnIndex = ColumnTag.IpAddress Then
+            Dim direction As Integer = DataDisplay.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection
+            Select Case direction
+                Case SortOrder.None
+                    direction = SortOrder.Ascending
+                Case SortOrder.Ascending
+                    direction = SortOrder.Descending
+                Case SortOrder.Descending
+                    direction = SortOrder.Ascending
+            End Select
+            DataDisplay.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection = direction
+            If direction = SortOrder.Ascending Then direction = System.ComponentModel.ListSortDirection.Ascending Else direction = System.ComponentModel.ListSortDirection.Descending
+            DataDisplay.Sort(DataDisplay.Columns(e.ColumnIndex), direction)
+        End If
+        If e.ColumnIndex <> ColumnTag.IpAddress Then DataDisplay.Columns(ColumnTag.IpAddress).HeaderCell.SortGlyphDirection = SortOrder.None
+    End Sub
+
+    Private Sub DataDisplay_SortCompare(sender As Object, e As DataGridViewSortCompareEventArgs) Handles DataDisplay.SortCompare
+        Select Case e.Column.Index
+            Case ColumnTag.IpAddress
+                Dim c1val As Int64 = GetIpVal(e.CellValue1.ToString)
+                Dim c2val As Int64 = GetIpVal(e.CellValue2.ToString)
+                e.SortResult = c1val.CompareTo(c2val)
+                e.Handled = True
+        End Select
     End Sub
 
     Public Sub RefreshDisplay()
@@ -210,7 +234,8 @@
     Private Sub TxtPorts_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtPorts.KeyDown
         If e.KeyCode = Keys.Enter Then
             RedoColumns()
-            e.SuppressKeyPress = True
+            e.SuppressKeyPress = True ' Stop beeping (new line on monoline textbox)
+            e.Handled = True ' To make sure it doesn't try to enter secret new line text
         End If
     End Sub
 

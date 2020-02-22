@@ -35,7 +35,6 @@ Partial Class FormNutView
         Me.ChkAutoPort = New System.Windows.Forms.CheckBox()
         Me.BtnClear = New System.Windows.Forms.Button()
         Me.BtnSave2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.LblLegendA1 = New System.Windows.Forms.Label()
         Me.LblLegendA2 = New System.Windows.Forms.Label()
         Me.LblLegendB2 = New System.Windows.Forms.Label()
@@ -85,6 +84,7 @@ Partial Class FormNutView
         Me.DataDisplay.Location = New System.Drawing.Point(6, 53)
         Me.DataDisplay.Name = "DataDisplay"
         Me.DataDisplay.RowHeadersVisible = False
+        Me.DataDisplay.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataDisplay.Size = New System.Drawing.Size(740, 317)
         Me.DataDisplay.TabIndex = 0
         '
@@ -164,16 +164,6 @@ Partial Class FormNutView
         Me.BtnSave2.TabIndex = 7
         Me.BtnSave2.Text = "Save Short"
         Me.BtnSave2.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(6, 335)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(71, 35)
-        Me.Button1.TabIndex = 8
-        Me.Button1.Text = "Demo"
-        Me.Button1.UseVisualStyleBackColor = True
-        Me.Button1.Visible = False
         '
         'LblLegendA1
         '
@@ -279,6 +269,7 @@ Partial Class FormNutView
         '
         Me.Column2.HeaderText = "IP Address"
         Me.Column2.Name = "Column2"
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
         Me.Column2.Width = 110
         '
         'Column3
@@ -318,7 +309,6 @@ Partial Class FormNutView
         Me.Controls.Add(Me.LblLegendB1)
         Me.Controls.Add(Me.LblLegendA2)
         Me.Controls.Add(Me.LblLegendA1)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.BtnSave2)
         Me.Controls.Add(Me.BtnClear)
         Me.Controls.Add(Me.ChkAutoPort)
@@ -346,7 +336,6 @@ Partial Class FormNutView
     Friend WithEvents ChkAutoPort As CheckBox
     Friend WithEvents BtnClear As Button
     Friend WithEvents BtnSave2 As Button
-    Friend WithEvents Button1 As Button
     Friend WithEvents LblLegendA1 As Label
     Friend WithEvents LblLegendA2 As Label
     Friend WithEvents LblLegendB2 As Label

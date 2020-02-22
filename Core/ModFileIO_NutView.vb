@@ -66,8 +66,12 @@
                 aHost.GetEmptiness()
 
                 Dim bHost As ClsHost = Nothing
-                If aHost.MacAddress <> "" Then bHost = AllHosts.Find(Function(p) p.MacAddress = aHost.MacAddress)  ' First search by MAC address
-                If bHost Is Nothing Then bHost = AllHosts.Find(Function(p) p.IP = aHost.IP)  ' Second search by IP address
+                If aHost.MacAddress <> "" Then
+                    bHost = AllHosts.Find(Function(p) p.MacAddress = aHost.MacAddress And p.IP = aHost.IP)
+                ElseIf aHost.MacAddress = "" Then
+                    bHost = AllHosts.Find(Function(p) p.IP = aHost.IP)
+                End If
+
                 If bHost Is Nothing Then
                     AllHosts.Add(aHost)
                 Else
