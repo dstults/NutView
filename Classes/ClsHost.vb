@@ -100,6 +100,7 @@
     Public CustomName As String
     Public HostName As String
     Public IP As String
+    Public PastIPs As String
     Public MacAddress As String
     Public Manufacturer As String
     Public Ping As New ClsPingData
@@ -107,6 +108,19 @@
     Public IsEmpty As Boolean
 
     Public Comments As New HashSet(Of String)
+
+    Public Sub RetireIP()
+        AddPastIP(IP)
+        IP = ""
+    End Sub
+
+    Public Sub AddPastIP(NewPastIP As String)
+        If PastIPs = "" Then
+            PastIPs = NewPastIP
+        Else
+            PastIPs = PastIPs & NewPastIP
+        End If
+    End Sub
 
     Public Function IpAddress() As Net.IPAddress
         Return Net.IPAddress.Parse(IP)

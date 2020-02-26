@@ -6,6 +6,7 @@
         CustomName
         IpAddress
         MacAddress
+        PastIPs
         Manufacturer
         Hostname
         Ping
@@ -39,6 +40,8 @@
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.IpAddress))
             DataDisplay.Rows(jRow).Cells(ColumnTag.MacAddress).Value = aHost.MacAddress
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.MacAddress))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.PastIPs).Value = aHost.PastIPs
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.PastIPs))
             DataDisplay.Rows(jRow).Cells(ColumnTag.Manufacturer).Value = aHost.Manufacturer
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.Manufacturer))
             DataDisplay.Rows(jRow).Cells(ColumnTag.Hostname).Value = aHost.HostName
@@ -136,6 +139,7 @@
         For Each iPort As Integer In ShownPorts
             DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, iPort)
             DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
+            DataDisplay.Columns(DataDisplay.Columns.Count - 1).ReadOnly = True
         Next
         DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, "Comments")
         DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 550
@@ -183,10 +187,12 @@
             Select Case e.ColumnIndex
                 Case ColumnTag.CustomName
                     KnownHosts(e.RowIndex).CustomName = outTxt
-                Case ColumnTag.Hostname
+                Case ColumnTag.Hostname ' Locked?
                     KnownHosts(e.RowIndex).HostName = outTxt
-                Case ColumnTag.IpAddress
+                Case ColumnTag.IpAddress ' Locked?
                     KnownHosts(e.RowIndex).IP = outTxt
+                Case ColumnTag.PastIPs ' Locked?
+                    KnownHosts(e.RowIndex).PastIPs = outTxt
                 Case ColumnTag.MacAddress
                     KnownHosts(e.RowIndex).MacAddress = outTxt
                 Case ColumnTag.Manufacturer

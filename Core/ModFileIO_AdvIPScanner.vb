@@ -11,11 +11,20 @@
             Next
         ElseIf iPart(0) = "On" Or iPart(0) = "Dead" Then
             Dim aHost As ClsHost = AllHosts.Find(Function(p) p.MacAddress = iPart(12))  ' First search by MAC address
-            If aHost Is Nothing Then aHost = AllHosts.Find(Function(p) p.IP = iPart(2))  ' Second search by IP address
             If aHost Is Nothing Then
-                aHost = New ClsHost
-                AllHosts.Add(aHost)
-                aHost.IP = iPart(2)
+                aHost = AllHosts.Find(Function(p) p.IP = iPart(2))  ' Second search by IP address
+                If aHost Is Nothing Then
+                    aHost = New ClsHost
+                    AllHosts.Add(aHost)
+                    aHost.IP = iPart(2)
+                End If
+            Else
+                If aHost.IP <> iPart(2) Then
+                    aHost.RetireIP()
+                    aHost = New ClsHost
+                    AllHosts.Add(aHost)
+                    aHost.IP = iPart(2)
+                End If
             End If
             If iPart(1) <> iPart(2) Then aHost.HostName = iPart(1)
             If iPart(4) <> "" Then

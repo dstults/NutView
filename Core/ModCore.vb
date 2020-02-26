@@ -65,8 +65,10 @@ Module ModCore
     End Sub
 
     Public Function GetIpVal(ipAdd As String) As Int64
+        If ipAdd = "" Then Return 0
         If ipAdd.Contains("&") Then Return 0
         Dim ipVars() As String = Split(ipAdd, ".")
+        If ipVars.Count <> 4 Then Return 0
         Dim result As Int64 = 0
         result += ipVars(0) * 256 * 256 * 256
         result += ipVars(1) * 256 * 256
