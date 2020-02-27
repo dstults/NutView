@@ -3,21 +3,22 @@
     Private Sub NutCheckImport(iPart() As String)
         Select Case LCase(iPart(0))
             Case "test time"
-                InputTime = CDate(iPart(1))
+                FileIoDateTime = CDate(iPart(1))
             Case "input ips"
-                    ' IGNORE - ALREADY INCLUDED
+                    ' IGNORE
             Case "input ports"
-                    ' IGNORE - ALREADY INCLUDED
+                    ' IGNORE
             Case "timeout"
-                    ' IGNORE FOR NOW
+                    ' IGNORE
             Case "tests"
-                ' IGNORE - ALREADY INCLUDED
+                ' IGNORE
             Case Else
                 Dim aHost As ClsHost = AllHosts.Find(Function(p) p.IP = iPart(0))
                 If aHost Is Nothing Then
                     aHost = New ClsHost
                     AllHosts.Add(aHost)
                     aHost.IP = iPart(0)
+                    aHost.IP_Date = FileIoDateTime
                 End If
                 Dim tcpMode As Boolean = False
                 Dim udpMode As Boolean = False
@@ -26,9 +27,9 @@
                 Do Until intA >= iPart.Count
                     Select Case iPart(intA)
                         Case "+ping", "ping hit"
-                            aHost.Ping.Add(True, InputTime)
+                            aHost.Ping.Add(True, FileIoDateTime)
                         Case "-ping", "ping miss"
-                            aHost.Ping.Add(False, InputTime)
+                            aHost.Ping.Add(False, FileIoDateTime)
                         Case "tcp"
                             tcpMode = True
                             udpMode = False
@@ -46,10 +47,10 @@
                                 Select Case Left(iPart(intA), 1)
                                     Case "+"
                                         Dim aPort As Integer = CInt(Mid(iPart(intA), 2))
-                                        aHost.Tcp.Add(True, aPort, InputTime)
+                                        aHost.Tcp.Add(True, aPort, FileIoDateTime)
                                     Case "-"
                                         Dim aPort As Integer = CInt(Mid(iPart(intA), 2))
-                                        aHost.Tcp.Add(False, aPort, InputTime)
+                                        aHost.Tcp.Add(False, aPort, FileIoDateTime)
                                     Case Else
                                         If LCase(iPart(intA)) = "comment" Then
                                             commentMode = True
@@ -61,9 +62,9 @@
                                 aHost.Comments.Add(iPart(intA))
                             End If
                     End Select
-                    aHost.GetEmptiness()
                     intA += 1
                 Loop
+                If aHost.IsEmpty Then AllHosts.Remove(aHost)
         End Select
     End Sub
 

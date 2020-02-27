@@ -18,7 +18,7 @@
     End Enum
 
     Private InputMode As Integer = FType.NutCheck
-    Private InputTime As DateTime = DateTime.Now
+    Private FileIoDateTime As DateTime = DateTime.Now
     Private CurrentProgress As Integer
     Private MyFileList() As String
 
@@ -44,16 +44,17 @@
             result = 100
         End If
         If result = 100 Then GetKnownHosts()
-
+        If result > 100 Then Return 100
         Return result
     End Function
 
     Private Sub NextFile()
-        Try
-            ImportFile(MyFileList(CurrentProgress))
-        Catch ex As Exception
-            MsgBox("Error loading/parsing file:" & vbNewLine & ex.Message)
-        End Try
+        FileIoDateTime = DateTime.Now
+        'Try
+        ImportFile(MyFileList(CurrentProgress))
+            'Catch ex As Exception
+        'MsgBox("Error loading/parsing file:" & vbNewLine & ex.Message)
+        'End Try
     End Sub
 
     Private Sub ImportFile(FilePath As String)

@@ -1,4 +1,9 @@
 ﻿Public Class ClsHost
+    Implements IComparable(Of ClsHost)
+
+    Public Function CompareTo(other As ClsHost) As Integer Implements IComparable(Of ClsHost).CompareTo
+        Return GetIpVal(Me.IP).CompareTo(GetIpVal(other.IP))
+    End Function
 
     Public Class ClsPingData
         Public Value As Integer
@@ -100,12 +105,12 @@
     Public CustomName As String
     Public HostName As String
     Public IP As String
+    Public IP_Date As DateTime
     Public PastIPs As String
     Public MacAddress As String
     Public Manufacturer As String
     Public Ping As New ClsPingData
     Public Tcp As New ClsTcpData
-    Public IsEmpty As Boolean
 
     Public Comments As New HashSet(Of String)
 
@@ -126,13 +131,13 @@
         Return Net.IPAddress.Parse(IP)
     End Function
 
-    Public Sub GetEmptiness()
+    Public Function IsEmpty() As Boolean
         Dim HasMeta As Boolean = False
         If CustomName <> "" Then HasMeta = True
         If MacAddress <> "" Then HasMeta = True
         If Manufacturer <> "" Then HasMeta = True
         If Comments.Count > 0 Then HasMeta = True
         If HasMeta Or Ping.Value >= PortState.MissingStale Or Tcp.OpenPorts.Count > 0 Then IsEmpty = False Else IsEmpty = True
-    End Sub
+    End Function
 
 End Class

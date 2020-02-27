@@ -12,7 +12,7 @@
                         Case "nutview"
                             If iPart.Length > 1 Then
                                 intA += 1
-                                InputTime = CDate(iPart(intA))
+                                FileIoDateTime = CDate(iPart(intA))
                             End If
                         Case "custom name"
                             intA += 1
@@ -20,6 +20,12 @@
                         Case "ip"
                             intA += 1
                             aHost.IP = iPart(intA)
+                        Case "past ips"
+                            intA += 1
+                            aHost.PastIPs = iPart(intA)
+                        Case "ip date"
+                            intA += 1
+                            aHost.IP_Date = CDate(iPart(intA))
                         Case "mac"
                             intA += 1
                             aHost.MacAddress = iPart(intA)
@@ -53,17 +59,16 @@
                                 Dim getVals() As String = Split(iPart(intA), ":")
                                 Select Case LCase(getVals(0))
                                     Case "ping"
-                                        aHost.Ping.SetVal(getVals(1), InputTime)
+                                        aHost.Ping.SetVal(getVals(1), FileIoDateTime)
                                     Case "tcp"
-                                        aHost.Tcp.SetVal(getVals(1), getVals(2), InputTime)
+                                        aHost.Tcp.SetVal(getVals(1), getVals(2), FileIoDateTime)
                                     Case "udp"
-                                        'aHost.Udp.SetVal(getVals(1), getVals(2), InputTime)
+                                        'aHost.Udp.SetVal(getVals(1), getVals(2), FileIoDateTime)
                                 End Select
                             End If
                     End Select
                     intA += 1
                 Loop Until intA >= iPart.Count
-                aHost.GetEmptiness()
 
                 Dim bHost As ClsHost = Nothing
                 If aHost.MacAddress <> "" Then
@@ -114,7 +119,6 @@
         For Each iComment As String In aHost.Comments
             bHost.Comments.Add(iComment) ' SortedSets will automatically delete redundant entries
         Next
-        If bHost.IsEmpty And Not aHost.IsEmpty Then bHost.IsEmpty = False
     End Sub
 
     Private Sub CheckMergeStrings(ByRef StringAdd As String, ByRef StringTgt As String)

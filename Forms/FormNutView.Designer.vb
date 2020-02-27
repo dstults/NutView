@@ -26,8 +26,14 @@ Partial Class FormNutView
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormNutView))
         Me.DataDisplay = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.BtnImport = New System.Windows.Forms.Button()
-        Me.BtnSave1 = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.TxtPorts = New System.Windows.Forms.TextBox()
@@ -44,13 +50,8 @@ Partial Class FormNutView
         Me.LblLegendD2 = New System.Windows.Forms.Label()
         Me.LblLegendD1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ChkPortShowFilter = New System.Windows.Forms.CheckBox()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -89,6 +90,53 @@ Partial Class FormNutView
         Me.DataDisplay.Size = New System.Drawing.Size(740, 317)
         Me.DataDisplay.TabIndex = 0
         '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Custom Name"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Width = 120
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "IP Address"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
+        Me.Column2.Width = 110
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "MAC Address"
+        Me.Column3.Name = "Column3"
+        Me.Column3.Width = 130
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "Past IPs"
+        Me.Column4.Name = "Column4"
+        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column4.Width = 80
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Manufacturer"
+        Me.Column5.Name = "Column5"
+        Me.Column5.Width = 80
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Hostname"
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
+        Me.Column6.Width = 120
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "Ping"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        Me.Column7.Width = 30
+        '
         'BtnImport
         '
         Me.BtnImport.Location = New System.Drawing.Point(83, 8)
@@ -97,15 +145,6 @@ Partial Class FormNutView
         Me.BtnImport.TabIndex = 1
         Me.BtnImport.Text = "Import"
         Me.BtnImport.UseVisualStyleBackColor = True
-        '
-        'BtnSave1
-        '
-        Me.BtnSave1.Location = New System.Drawing.Point(160, 8)
-        Me.BtnSave1.Name = "BtnSave1"
-        Me.BtnSave1.Size = New System.Drawing.Size(71, 35)
-        Me.BtnSave1.TabIndex = 2
-        Me.BtnSave1.Text = "Save Full"
-        Me.BtnSave1.UseVisualStyleBackColor = True
         '
         'OpenFileDialog1
         '
@@ -132,7 +171,7 @@ Partial Class FormNutView
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!)
-        Me.Label1.Location = New System.Drawing.Point(314, 10)
+        Me.Label1.Location = New System.Drawing.Point(264, 7)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(48, 18)
         Me.Label1.TabIndex = 4
@@ -141,7 +180,7 @@ Partial Class FormNutView
         'ChkAutoPort
         '
         Me.ChkAutoPort.AutoSize = True
-        Me.ChkAutoPort.Location = New System.Drawing.Point(362, 13)
+        Me.ChkAutoPort.Location = New System.Drawing.Point(311, 10)
         Me.ChkAutoPort.Name = "ChkAutoPort"
         Me.ChkAutoPort.Size = New System.Drawing.Size(48, 17)
         Me.ChkAutoPort.TabIndex = 5
@@ -159,11 +198,11 @@ Partial Class FormNutView
         '
         'BtnSave2
         '
-        Me.BtnSave2.Location = New System.Drawing.Point(237, 8)
+        Me.BtnSave2.Location = New System.Drawing.Point(160, 8)
         Me.BtnSave2.Name = "BtnSave2"
         Me.BtnSave2.Size = New System.Drawing.Size(71, 35)
         Me.BtnSave2.TabIndex = 7
-        Me.BtnSave2.Text = "Save Short"
+        Me.BtnSave2.Text = "Save"
         Me.BtnSave2.UseVisualStyleBackColor = True
         '
         'LblLegendA1
@@ -260,57 +299,31 @@ Partial Class FormNutView
         Me.Label2.TabIndex = 17
         Me.Label2.Text = "Filter by State:"
         '
-        'Column1
+        'Button1
         '
-        Me.Column1.HeaderText = "Custom Name"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Width = 120
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(6, 335)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(71, 35)
+        Me.Button1.TabIndex = 18
+        Me.Button1.Text = "Clear"
+        Me.Button1.UseVisualStyleBackColor = True
         '
-        'Column2
+        'ChkPortShowFilter
         '
-        Me.Column2.HeaderText = "IP Address"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
-        Me.Column2.Width = 110
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "MAC Address"
-        Me.Column3.Name = "Column3"
-        Me.Column3.Width = 130
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Past IPs"
-        Me.Column4.Name = "Column4"
-        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column4.Width = 80
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Manufacturer"
-        Me.Column5.Name = "Column5"
-        Me.Column5.Width = 80
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Hostname"
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
-        Me.Column6.Width = 120
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "Ping"
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        Me.Column7.Width = 30
+        Me.ChkPortShowFilter.AutoSize = True
+        Me.ChkPortShowFilter.Location = New System.Drawing.Point(358, 10)
+        Me.ChkPortShowFilter.Name = "ChkPortShowFilter"
+        Me.ChkPortShowFilter.Size = New System.Drawing.Size(50, 17)
+        Me.ChkPortShowFilter.TabIndex = 19
+        Me.ChkPortShowFilter.Text = "Only:"
+        Me.ChkPortShowFilter.UseVisualStyleBackColor = True
         '
         'FormNutView
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(758, 382)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.LblLegendD2)
         Me.Controls.Add(Me.LblLegendD1)
@@ -322,12 +335,12 @@ Partial Class FormNutView
         Me.Controls.Add(Me.LblLegendA1)
         Me.Controls.Add(Me.BtnSave2)
         Me.Controls.Add(Me.BtnClear)
-        Me.Controls.Add(Me.ChkAutoPort)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TxtPorts)
-        Me.Controls.Add(Me.BtnSave1)
         Me.Controls.Add(Me.BtnImport)
         Me.Controls.Add(Me.DataDisplay)
+        Me.Controls.Add(Me.ChkPortShowFilter)
+        Me.Controls.Add(Me.ChkAutoPort)
+        Me.Controls.Add(Me.Label1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormNutView"
         Me.Text = "Darren's NutView"
@@ -339,7 +352,6 @@ Partial Class FormNutView
 
     Friend WithEvents DataDisplay As DataGridView
     Friend WithEvents BtnImport As Button
-    Friend WithEvents BtnSave1 As Button
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents TxtPorts As TextBox
@@ -363,4 +375,6 @@ Partial Class FormNutView
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
+    Friend WithEvents Button1 As Button
+    Friend WithEvents ChkPortShowFilter As CheckBox
 End Class

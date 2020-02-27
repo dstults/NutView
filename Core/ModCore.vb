@@ -8,8 +8,7 @@ Module ModCore
 
     Public AllHosts As New List(Of ClsHost)
     Public KnownHosts As New HashSet(Of ClsHost)
-    Public ShownHosts As New HashSet(Of ClsHost)
-    Public EmptyHosts As New HashSet(Of ClsHost)
+    Public ShownHosts As New SortedSet(Of ClsHost)
     Public ShownPorts As New SortedSet(Of Integer)
     Public ShownState(5) As Boolean
 
@@ -37,10 +36,9 @@ Module ModCore
     Public Sub GetKnownHosts()
         ' Optimization is good!
         KnownHosts.Clear()
-        EmptyHosts.Clear()
         For Each iHost In AllHosts
             If iHost.IsEmpty Then
-                EmptyHosts.Add(iHost)
+                MsgBox("This can probably be deleted? Debug?")
             Else
                 KnownHosts.Add(iHost)
             End If
@@ -51,15 +49,23 @@ Module ModCore
     Public Sub GetShownHosts()
         ShownHosts.Clear()
         Dim ShowThisHost As Boolean
+        Dim ShowEverybody As Boolean = ShownState(PortState.AliveNew) And ShownState(PortState.AliveStale) And ShownState(PortState.MissingNew) And ShownState(PortState.MissingStale)
         For Each iHost In AllHosts
             ShowThisHost = False
-            For Each iPort As Integer In iHost.Tcp.OpenPorts
-                If ShownState(PortState.AliveNew) And iHost.Tcp.Value(iPort) = PortState.AliveNew Then ShowThisHost = True
-                If ShownState(PortState.AliveStale) And iHost.Tcp.Value(iPort) = PortState.AliveStale Then ShowThisHost = True
-                If ShownState(PortState.MissingNew) And iHost.Tcp.Value(iPort) = PortState.MissingNew Then ShowThisHost = True
-                If ShownState(PortState.MissingStale) And iHost.Tcp.Value(iPort) = PortState.MissingStale Then ShowThisHost = True
-                If ShowThisHost Then Exit For
-            Next
+            If MainWindow.ChkPortShowFilter.Checked Then
+
+            End If
+            If ShowEverybody Then
+                ShowThisHost = True
+            Else
+                For Each iPort As Integer In iHost.Tcp.OpenPorts
+                    If ShownState(PortState.AliveNew) And iHost.Tcp.Value(iPort) = PortState.AliveNew Then ShowThisHost = True
+                    If ShownState(PortState.AliveStale) And iHost.Tcp.Value(iPort) = PortState.AliveStale Then ShowThisHost = True
+                    If ShownState(PortState.MissingNew) And iHost.Tcp.Value(iPort) = PortState.MissingNew Then ShowThisHost = True
+                    If ShownState(PortState.MissingStale) And iHost.Tcp.Value(iPort) = PortState.MissingStale Then ShowThisHost = True
+                    If ShowThisHost Then Exit For
+                Next
+            End If
             If ShowThisHost Then ShownHosts.Add(iHost)
         Next
     End Sub

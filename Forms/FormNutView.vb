@@ -151,11 +151,10 @@
         AllHosts.Clear()
         KnownHosts.Clear()
         ShownHosts.Clear()
-        EmptyHosts.Clear()
         RedoColumns()
     End Sub
 
-    Private Sub BtnSave1_Click(sender As Object, e As EventArgs) Handles BtnSave1.Click
+    Private Sub BtnSave1_Click(sender As Object, e As EventArgs)
         SaveFileDialog1.FileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm") & " NutView.csv"
         Select Case SaveFileDialog1.ShowDialog()
             Case DialogResult.Cancel, DialogResult.Abort
@@ -293,4 +292,7 @@
         RedoColumns()
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        MsgBox("AllHosts.Last.IP: " & AllHosts.Last.IP)
+    End Sub
 End Class

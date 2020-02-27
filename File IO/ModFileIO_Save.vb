@@ -53,6 +53,7 @@
         MachineReport &= cDel & "CUSTOM NAME" & cDel & iHost.CustomName
         MachineReport &= cDel & "HOSTNAME" & cDel & iHost.HostName
         MachineReport &= cDel & "IP" & cDel & iHost.IP
+        MachineReport &= cDel & "IP DATE" & cDel & iHost.IP_Date.ToString
         MachineReport &= cDel & "PAST IPS" & cDel & iHost.PastIPs
         MachineReport &= cDel & "MAC" & cDel & iHost.MacAddress
         MachineReport &= cDel & "MANUFACTURER" & cDel & iHost.Manufacturer
