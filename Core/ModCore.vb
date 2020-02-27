@@ -3,14 +3,14 @@
 
 Module ModCore
 
-    Public ProgVersion As String = "v0.60"
+    Public ProgVersion As String = "v0.65"
     Public MainWindow As New FormNutView
 
     Public AllHosts As New List(Of ClsHost)
-    Public KnownHosts As New HashSet(Of ClsHost)
+    Public KnownHosts As New SortedSet(Of ClsHost)
     Public ShownHosts As New SortedSet(Of ClsHost)
     Public ShownPorts As New SortedSet(Of Integer)
-    Public ShownState(5) As Boolean
+    Public ShownState(PortState.AliveNew) As Boolean
 
     Public Enum PortState
         Untested ' Dark Gray
@@ -28,7 +28,7 @@ Module ModCore
     End Sub
 
     Private Sub GlobalSetup()
-        For intA As Integer = 0 To 5
+        For intA As Integer = PortState.MissingStale To PortState.AliveNew
             ShownState(intA) = True
         Next
     End Sub
@@ -48,25 +48,37 @@ Module ModCore
 
     Public Sub GetShownHosts()
         ShownHosts.Clear()
-        Dim ShowThisHost As Boolean
+        Dim ShowThisHost1 As Boolean
+        Dim ShowThisHost2 As Boolean
         Dim ShowEverybody As Boolean = ShownState(PortState.AliveNew) And ShownState(PortState.AliveStale) And ShownState(PortState.MissingNew) And ShownState(PortState.MissingStale)
-        For Each iHost In AllHosts
-            ShowThisHost = False
-            If MainWindow.ChkPortShowFilter.Checked Then
-
-            End If
-            If ShowEverybody Then
-                ShowThisHost = True
-            Else
+        For Each iHost In KnownHosts
+            ShowThisHost1 = False
+            If MainWindow.ChkPortShowFilter.Checked And Not MainWindow.ChkAutoPort.Checked Then
                 For Each iPort As Integer In iHost.Tcp.OpenPorts
-                    If ShownState(PortState.AliveNew) And iHost.Tcp.Value(iPort) = PortState.AliveNew Then ShowThisHost = True
-                    If ShownState(PortState.AliveStale) And iHost.Tcp.Value(iPort) = PortState.AliveStale Then ShowThisHost = True
-                    If ShownState(PortState.MissingNew) And iHost.Tcp.Value(iPort) = PortState.MissingNew Then ShowThisHost = True
-                    If ShownState(PortState.MissingStale) And iHost.Tcp.Value(iPort) = PortState.MissingStale Then ShowThisHost = True
-                    If ShowThisHost Then Exit For
+                    If ShownPorts.Contains(iPort) Then
+                        If iHost.Tcp.Value(iPort) > PortState.Dead Then ShowThisHost1 = True : Exit For
+                    End If
                 Next
+            Else
+                ShowThisHost1 = True
             End If
-            If ShowThisHost Then ShownHosts.Add(iHost)
+            ShowThisHost2 = False
+            If ShowEverybody Then
+                ShowThisHost2 = True
+            Else
+                If Not MainWindow.ChkPortShowFilter.Checked Or MainWindow.ChkAutoPort.Checked Then
+                    If ShownState(iHost.Ping.Value) Then ShowThisHost2 = True
+                End If
+                If ShowThisHost2 = False Then
+                    For Each iPort As Integer In iHost.Tcp.OpenPorts
+                        'If iHost.IP = "172.16.1.106" Then MsgBox("CheckMe")
+                        If ShownPorts.Contains(iPort) Then
+                            If ShownState(iHost.Tcp.Value(iPort)) Then ShowThisHost2 = True : Exit For
+                        End If
+                    Next
+                End If
+            End If
+            If ShowThisHost1 And ShowThisHost2 Then ShownHosts.Add(iHost)
         Next
     End Sub
 

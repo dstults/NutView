@@ -109,19 +109,34 @@
     Private Sub ChkAutoPort_CheckedChanged(sender As Object, e As EventArgs) Handles ChkAutoPort.CheckedChanged
         Select Case ChkAutoPort.Checked
             Case True
+                ChkPortShowFilter.Enabled = False
                 TxtPorts.Enabled = False
             Case False
+                ChkPortShowFilter.Enabled = True
                 TxtPorts.Enabled = True
         End Select
         RedoColumns()
     End Sub
 
     Private Sub RedoColumns()
+        GetShownPorts()
         GetShownHosts()
         FinishedLoading = False
         Do Until DataDisplay.Columns.Count <= ColumnTag.Ports
             DataDisplay.Columns.Remove(DataDisplay.Columns(ColumnTag.Ports))
         Loop
+        For Each iPort As Integer In ShownPorts
+            DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, iPort)
+            DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
+            DataDisplay.Columns(DataDisplay.Columns.Count - 1).ReadOnly = True
+        Next
+        DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, "Comments")
+        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 550
+        DataDisplay.Columns(DataDisplay.Columns.Count - 1).ReadOnly = True
+        ResetHosts()
+    End Sub
+
+    Private Sub GetShownPorts()
         If ChkAutoPort.Checked Then
             ShownPorts.Clear()
             For Each aHost In KnownHosts
@@ -136,15 +151,6 @@
                 ShownPorts.Add(Val(strPorts(intA)))
             Next
         End If
-        For Each iPort As Integer In ShownPorts
-            DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, iPort)
-            DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 24
-            DataDisplay.Columns(DataDisplay.Columns.Count - 1).ReadOnly = True
-        Next
-        DataDisplay.Columns.Add("Column" & DataDisplay.Columns.Count + 1, "Comments")
-        DataDisplay.Columns(DataDisplay.Columns.Count - 1).Width = 550
-        DataDisplay.Columns(DataDisplay.Columns.Count - 1).ReadOnly = True
-        ResetHosts()
     End Sub
 
     Private Sub BtnClear_Click(sender As Object, e As EventArgs) Handles BtnClear.Click
@@ -292,7 +298,11 @@
         RedoColumns()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         MsgBox("AllHosts.Last.IP: " & AllHosts.Last.IP)
+    End Sub
+
+    Private Sub ChkPortShowFilter_CheckedChanged(sender As Object, e As EventArgs) Handles ChkPortShowFilter.CheckedChanged
+        RedoColumns()
     End Sub
 End Class

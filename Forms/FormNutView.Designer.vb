@@ -50,7 +50,6 @@ Partial Class FormNutView
         Me.LblLegendD2 = New System.Windows.Forms.Label()
         Me.LblLegendD1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.ChkPortShowFilter = New System.Windows.Forms.CheckBox()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -299,16 +298,6 @@ Partial Class FormNutView
         Me.Label2.TabIndex = 17
         Me.Label2.Text = "Filter by State:"
         '
-        'Button1
-        '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(6, 335)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(71, 35)
-        Me.Button1.TabIndex = 18
-        Me.Button1.Text = "Clear"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'ChkPortShowFilter
         '
         Me.ChkPortShowFilter.AutoSize = True
@@ -323,7 +312,6 @@ Partial Class FormNutView
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(758, 382)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.LblLegendD2)
         Me.Controls.Add(Me.LblLegendD1)
@@ -375,6 +363,5 @@ Partial Class FormNutView
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
-    Friend WithEvents Button1 As Button
     Friend WithEvents ChkPortShowFilter As CheckBox
 End Class
