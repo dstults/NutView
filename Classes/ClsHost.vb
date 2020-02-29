@@ -105,6 +105,7 @@
     Public CustomName As String
     Public HostName As String
     Public IP As String
+    Public IP6 As String
     Public IP_Date As DateTime
     Public PastIPs As String
     Public MacAddress As String

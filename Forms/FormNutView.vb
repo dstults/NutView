@@ -3,8 +3,9 @@
     Private FinishedLoading As Boolean = False
 
     Private Enum ColumnTag
+        Ip4Address
         CustomName
-        IpAddress
+        Ip6Address
         MacAddress
         PastIPs
         Manufacturer
@@ -34,10 +35,12 @@
             DataDisplay.Rows.Add()
             Dim jRow As Integer = DataDisplay.Rows.Count - 1 ' (-1 header & -1 adder)
 
+            DataDisplay.Rows(jRow).Cells(ColumnTag.Ip4Address).Value = aHost.IP
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.Ip4Address))
             DataDisplay.Rows(jRow).Cells(ColumnTag.CustomName).Value = aHost.CustomName
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.CustomName))
-            DataDisplay.Rows(jRow).Cells(ColumnTag.IpAddress).Value = aHost.IP
-            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.IpAddress))
+            DataDisplay.Rows(jRow).Cells(ColumnTag.Ip6Address).Value = aHost.IP6
+            DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.Ip6Address))
             DataDisplay.Rows(jRow).Cells(ColumnTag.MacAddress).Value = aHost.MacAddress
             DoCellBestColorCheck(DataDisplay.Rows(jRow).Cells(ColumnTag.MacAddress))
             DataDisplay.Rows(jRow).Cells(ColumnTag.PastIPs).Value = aHost.PastIPs
@@ -194,8 +197,10 @@
                     KnownHosts(e.RowIndex).CustomName = outTxt
                 Case ColumnTag.Hostname ' Locked?
                     KnownHosts(e.RowIndex).HostName = outTxt
-                Case ColumnTag.IpAddress ' Locked?
+                Case ColumnTag.Ip4Address ' Locked?
                     KnownHosts(e.RowIndex).IP = outTxt
+                Case ColumnTag.Ip6Address ' Locked?
+                    KnownHosts(e.RowIndex).IP6 = outTxt
                 Case ColumnTag.PastIPs ' Locked?
                     KnownHosts(e.RowIndex).PastIPs = outTxt
                 Case ColumnTag.MacAddress
@@ -211,7 +216,7 @@
     End Sub
 
     Private Sub DataDisplay_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DataDisplay.ColumnHeaderMouseClick
-        If e.ColumnIndex = ColumnTag.IpAddress Then
+        If e.ColumnIndex = ColumnTag.Ip4Address Then
             Dim direction As Integer = DataDisplay.Columns(e.ColumnIndex).HeaderCell.SortGlyphDirection
             Select Case direction
                 Case SortOrder.None
@@ -225,12 +230,12 @@
             If direction = SortOrder.Ascending Then direction = System.ComponentModel.ListSortDirection.Ascending Else direction = System.ComponentModel.ListSortDirection.Descending
             DataDisplay.Sort(DataDisplay.Columns(e.ColumnIndex), direction)
         End If
-        If e.ColumnIndex <> ColumnTag.IpAddress Then DataDisplay.Columns(ColumnTag.IpAddress).HeaderCell.SortGlyphDirection = SortOrder.None
+        If e.ColumnIndex <> ColumnTag.Ip4Address Then DataDisplay.Columns(ColumnTag.Ip4Address).HeaderCell.SortGlyphDirection = SortOrder.None
     End Sub
 
     Private Sub DataDisplay_SortCompare(sender As Object, e As DataGridViewSortCompareEventArgs) Handles DataDisplay.SortCompare
         Select Case e.Column.Index
-            Case ColumnTag.IpAddress
+            Case ColumnTag.Ip4Address
                 Dim c1val As Int64 = GetIpVal(e.CellValue1.ToString)
                 Dim c2val As Int64 = GetIpVal(e.CellValue2.ToString)
                 e.SortResult = c1val.CompareTo(c2val)

@@ -1,8 +1,8 @@
 ﻿Partial Module ModFileIO
 
     Private Sub AdvIpScannerImport(iPart() As String)
-        Dim AIS_Head() As String
 
+        'Dim AIS_Head() As String
         'If LCase(iPart(0)) = "Status" Then
         '    ' ONE DAY I MIGHT ACTUALLY USE THIS, FOR NOW THEY ARE ACTUALLY HARD-CODED.
         '    ReDim AIS_Head(iPart.Count - 1)
@@ -10,9 +10,10 @@
         '        AIS_Head(intA) = iPart(intA)
         '    Next
         'Try
+
         If iPart(0) = "On" Or iPart(0) = "Dead" Then
             Dim aHosts As List(Of ClsHost) = AllHosts.FindAll(Function(p) p.MacAddress = iPart(12) And p.IP = iPart(2))
-            Dim aHost As ClsHost
+            Dim aHost As ClsHost = Nothing
             If aHosts.Count = 0 Then aHost = Nothing Else If aHosts.Count = 1 Then aHost = aHosts(0) Else MsgBox("AAAAH!")
             If aHost IsNot Nothing Then ' perfect mac and ip match
                 aHost.IP_Date = FileIoDateTime

@@ -13,7 +13,7 @@
         NutCheck
         NutView
         AdvancedIPScanner
-        NetCat
+        NMap
         Metasploit
     End Enum
 
@@ -75,7 +75,7 @@
 
                     End Try
                     If LCase(Strings.Left(iPart(0), 2)) = "on" Or LCase(Strings.Left(iPart(0), 4)) = "dead" Or LCase(Strings.Left(iPart(0), 6)) = "status" Then InputMode = FType.AdvancedIPScanner
-
+                    If LCase(Strings.Left(iPart(0), 4)) = "nmap" Or LCase(Strings.Left(iPart(0), 13)) = "starting nmap" Then InputMode = FType.NMap
             End Select
             If InputMode <> FType.Unset Then Exit For
         Next
@@ -90,7 +90,8 @@
                 Case FType.AdvancedIPScanner
                     Dim iPart() As String = Split(iLine, vbTab)
                     AdvIpScannerImport(iPart)
-                Case FType.NetCat
+                Case FType.NMap
+                    NMapImport(iLine)
                 Case FType.Metasploit
             End Select
         Next

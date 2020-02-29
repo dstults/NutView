@@ -80,6 +80,7 @@
     <Compile Include="Core\ModCore.vb" />
     <Compile Include="File IO\ModFileIO.vb" />
     <Compile Include="File IO\ModFileIO_AdvIPScanner.vb" />
+    <Compile Include="File IO\ModFileIO_NMap.vb" />
     <Compile Include="File IO\ModFileIO_NutCheck.vb" />
     <Compile Include="File IO\ModFileIO_NutView.vb" />
     <Compile Include="File IO\ModFileIO_Save.vb" />

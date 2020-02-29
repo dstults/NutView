@@ -26,13 +26,6 @@ Partial Class FormNutView
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormNutView))
         Me.DataDisplay = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.BtnImport = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
@@ -51,6 +44,14 @@ Partial Class FormNutView
         Me.LblLegendD1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ChkPortShowFilter = New System.Windows.Forms.CheckBox()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataDisplay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -73,7 +74,7 @@ Partial Class FormNutView
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataDisplay.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataDisplay.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7})
+        Me.DataDisplay.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8})
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 8.0!)
@@ -89,53 +90,6 @@ Partial Class FormNutView
         Me.DataDisplay.Size = New System.Drawing.Size(740, 317)
         Me.DataDisplay.TabIndex = 0
         '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Custom Name"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Width = 120
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "IP Address"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
-        Me.Column2.Width = 110
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "MAC Address"
-        Me.Column3.Name = "Column3"
-        Me.Column3.Width = 130
-        '
-        'Column4
-        '
-        Me.Column4.HeaderText = "Past IPs"
-        Me.Column4.Name = "Column4"
-        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column4.Width = 80
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Manufacturer"
-        Me.Column5.Name = "Column5"
-        Me.Column5.Width = 80
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Hostname"
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
-        Me.Column6.Width = 120
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "Ping"
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        Me.Column7.Width = 30
-        '
         'BtnImport
         '
         Me.BtnImport.Location = New System.Drawing.Point(83, 8)
@@ -148,7 +102,7 @@ Partial Class FormNutView
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        Me.OpenFileDialog1.Filter = "All Files|*.*|CSVs|*.csv"
+        Me.OpenFileDialog1.Filter = "All Files|*.*|CSVs + TXTs|*.csv,*.txt"
         Me.OpenFileDialog1.Multiselect = True
         '
         'SaveFileDialog1
@@ -308,6 +262,60 @@ Partial Class FormNutView
         Me.ChkPortShowFilter.Text = "Only:"
         Me.ChkPortShowFilter.UseVisualStyleBackColor = True
         '
+        'Column1
+        '
+        Me.Column1.Frozen = True
+        Me.Column1.HeaderText = "IP Address"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
+        Me.Column1.Width = 110
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Custom Name"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Width = 120
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "IPv6"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "MAC Address"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Width = 130
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "Past IPs"
+        Me.Column5.Name = "Column5"
+        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Column5.Width = 80
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Manufacturer"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Width = 80
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "Hostname"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        Me.Column7.Width = 120
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "Ping"
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
+        Me.Column8.Width = 30
+        '
         'FormNutView
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -356,6 +364,7 @@ Partial Class FormNutView
     Friend WithEvents LblLegendD2 As Label
     Friend WithEvents LblLegendD1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents ChkPortShowFilter As CheckBox
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
@@ -363,5 +372,5 @@ Partial Class FormNutView
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
-    Friend WithEvents ChkPortShowFilter As CheckBox
+    Friend WithEvents Column8 As DataGridViewTextBoxColumn
 End Class
