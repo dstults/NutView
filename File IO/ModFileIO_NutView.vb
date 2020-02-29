@@ -70,18 +70,18 @@
                     intA += 1
                 Loop Until intA >= iPart.Count
 
-                Dim bHost As ClsHost = Nothing
-                If aHost.MacAddress <> "" Then
-                    bHost = AllHosts.Find(Function(p) p.MacAddress = aHost.MacAddress And p.IP = aHost.IP)
-                ElseIf aHost.MacAddress = "" Then
-                    bHost = AllHosts.Find(Function(p) p.IP = aHost.IP)
-                End If
+                'Dim bHost As ClsHost = Nothing
+                'If aHost.MacAddress <> "" Then
+                'bHost = AllHosts.Find(Function(p) p.MacAddress = aHost.MacAddress And p.IP = aHost.IP)
+                'ElseIf aHost.MacAddress = "" Then
+                'bHost = AllHosts.Find(Function(p) p.IP = aHost.IP)
+                'End If
 
-                If bHost Is Nothing Then
-                    AllHosts.Add(aHost)
-                Else
-                    MergeHosts(aHost, bHost)
-                End If
+                'If bHost Is Nothing Then
+                AllHosts.Add(aHost)
+                'Else
+                '                MergeHosts(aHost, bHost)
+                'End If
 
             Case Else
                 'ignore
