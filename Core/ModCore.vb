@@ -7,8 +7,8 @@ Module ModCore
     Public MainWindow As New FormNutView
 
     Public AllHosts As New List(Of ClsHost)
-    Public KnownHosts As New SortedSet(Of ClsHost)
-    Public ShownHosts As New SortedSet(Of ClsHost)
+    Public KnownHosts As New List(Of ClsHost)
+    Public ShownHosts As New List(Of ClsHost)
     Public ShownPorts As New SortedSet(Of Integer)
     Public ShownState(PortState.AliveNew) As Boolean
 
